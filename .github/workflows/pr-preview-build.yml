@@ -1,0 +1,17 @@
+name: PR Preview - Build
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [main]
+jobs:
+  build:
+    uses: WordPress/action-wp-playground-pr-preview/.github/workflows/preview-build.yml@v3
+    with:
+      artifacts: plugin-zip=build/axellcore-atelierclub.zip
+      build-command: |
+        mkdir -p build/axellcore-atelierclub
+        rsync -r --exclude='.git/' --exclude='.github/' --exclude='node_modules/' \
+          --exclude='vendor/' --exclude='tests/' --exclude='*.zip' \
+          . build/axellcore-atelierclub/
+        (cd build && zip -r axellcore-atelierclub.zip axellcore-atelierclub)

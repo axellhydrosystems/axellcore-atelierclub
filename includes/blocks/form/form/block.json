@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axellcore/form",
+	"title": "Atelier Form",
+	"category": "text",
+	"description": "Self-contained <form> wrapper for the Atelier Axell Club application form. Submission is client-side only at this phase (no backend yet).",
+	"keywords": [ "form", "application", "adesão" ],
+	"textdomain": "axellcore-atelierclub",
+	"attributes": {},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": false,
+		"className": true,
+		"customClassName": true
+	},
+	"editorScript": "file:./index.js"
+}

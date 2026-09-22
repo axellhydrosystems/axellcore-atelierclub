@@ -1,0 +1,20 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"preferredVersions": { "php": "8.2", "wp": "latest" },
+	"features": { "networking": true },
+	"steps": [
+		{ "step": "login", "username": "admin", "password": "password" },
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "url",
+				"url": "https://github.com/axellhydrosystems/axellcore-atelierclub/releases/latest/download/axellcore-atelierclub.zip"
+			},
+			"options": { "activate": true }
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; $page = get_page_by_path( 'atelier-club' ); wp_safe_redirect( $page ? get_permalink( $page ) : home_url() ); exit;"
+		}
+	]
+}

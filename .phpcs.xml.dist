@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<ruleset name="AxellcoreAtelierclub">
+	<description>Axellcore — Atelier Club — PHPCS + WPCS + PHPCompatibility</description>
+
+	<!-- Scope: production files only. -->
+	<file>axellcore-atelierclub.php</file>
+	<file>includes/</file>
+	<file>templates/</file>
+
+	<exclude-pattern>tests/</exclude-pattern>
+	<exclude-pattern>vendor/</exclude-pattern>
+	<exclude-pattern>assets/</exclude-pattern>
+	<exclude-pattern>node_modules/</exclude-pattern>
+	<exclude-pattern>bin/</exclude-pattern>
+	<exclude-pattern>phpstan-bootstrap.php</exclude-pattern>
+	<exclude-pattern>*.asset.php</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<!-- ── WordPress Coding Standards ───────────────────────────────────── -->
+	<rule ref="WordPress">
+		<!-- File naming: project uses class-template-loader.php, not class-axellcore-atelierclub-template-loader.php. -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+
+		<!-- Doc comment requirements: skip class/function/variable PHPDoc noise. -->
+		<exclude name="Squiz.Commenting.ClassComment"/>
+		<exclude name="Squiz.Commenting.FunctionComment"/>
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+		<exclude name="Squiz.Commenting.VariableComment"/>
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+
+		<!-- Short array syntax [] ... but this codebase uses array() for readability
+		     against the file:// block.json conventions; keep array() allowed. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+
+		<!-- FSE template content (templates/atelier-club.html) and block save()
+		     markup are static, trusted, plugin-authored strings — not user input. -->
+		<exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
+
+		<!-- WP hook callbacks must match expected signature even when trailing params are unused. -->
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed"/>
+	</rule>
+
+	<!-- Enforce correct text domain (PHPCS 3.3+ array element syntax). -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="axellcore-atelierclub"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- ── PHP Compatibility ─────────────────────────────────────────────── -->
+	<rule ref="PHPCompatibilityWP"/>
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_wp_version" value="6.7"/>
+
+</ruleset>
