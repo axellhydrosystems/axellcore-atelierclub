@@ -1,0 +1,217 @@
+# Copyright (C) 2026 Axell
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Axellcore — Atelier Club 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axellcore-atelierclub\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-22T21:04:14+00:00\n"
+"PO-Revision-Date: 2026-09-22 21:30+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: axellcore-atelierclub\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Plugin Name of the plugin
+#: axellcore-atelierclub.php
+msgid "Axellcore — Atelier Club"
+msgstr "Axellcore — Atelier Club"
+
+#. Plugin URI of the plugin
+#: axellcore-atelierclub.php
+msgid "https://axell.com.br/"
+msgstr "https://axell.com.br/"
+
+#. Description of the plugin
+#: axellcore-atelierclub.php
+msgid "Self-contained landing page (FSE template + core blocks + a custom application-form block) for the Atelier Axell Club invite program."
+msgstr "Landing page autocontida (template FSE + blocos nativos + um bloco customizado de formulário de adesão) para o programa por convite Atelier Axell Club."
+
+#. Author of the plugin
+#: axellcore-atelierclub.php
+msgid "Axell"
+msgstr "Axell"
+
+#: includes/class-template-loader.php:73
+msgid "Atelier — Blank Canvas"
+msgstr "Atelier — Página em Branco"
+
+#: includes/class-template-loader.php:74
+msgid "Self-contained canvas for the Atelier Axell Club landing page. No header/footer template parts — the page content renders alone."
+msgstr "Tela autocontida para a landing page do Atelier Axell Club. Sem partes de template de cabeçalho/rodapé — o conteúdo da página é renderizado sozinho."
+
+#: includes/blocks/form/form-input/index.js:25
+msgid "Text"
+msgstr "Texto"
+
+#: includes/blocks/form/form-input/index.js:26
+msgid "Email"
+msgstr "E-mail"
+
+#: includes/blocks/form/form-input/index.js:27
+msgid "URL"
+msgstr "URL"
+
+#: includes/blocks/form/form-input/index.js:28
+msgid "Number"
+msgstr "Número"
+
+#: includes/blocks/form/form-input/index.js:29
+#: includes/blocks/form/form-input/index.js:40
+msgid "Phone"
+msgstr "Telefone"
+
+#: includes/blocks/form/form-input/index.js:30
+msgid "Textarea"
+msgstr "Área de texto"
+
+#: includes/blocks/form/form-input/index.js:31
+msgid "Select (options)"
+msgstr "Select (opções)"
+
+#: includes/blocks/form/form-input/index.js:32
+msgid "Checkbox"
+msgstr "Checkbox"
+
+#: includes/blocks/form/form-input/index.js:33
+msgid "Hidden"
+msgstr "Oculto"
+
+#: includes/blocks/form/form-input/index.js:37
+msgid "— none —"
+msgstr "— nenhuma —"
+
+#: includes/blocks/form/form-input/index.js:38
+msgid "CPF / CNPJ"
+msgstr "CPF / CNPJ"
+
+#: includes/blocks/form/form-input/index.js:39
+msgid "CEP (postal code)"
+msgstr "CEP"
+
+#: includes/blocks/form/form-input/index.js:103
+msgid "Select an option"
+msgstr "Selecione uma opção"
+
+#: includes/blocks/form/form-input/index.js:184
+msgid "Field label…"
+msgstr "Rótulo do campo…"
+
+#: includes/blocks/form/form-input/index.js:196
+msgid "Field"
+msgstr "Campo"
+
+#: includes/blocks/form/form-input/index.js:198
+msgid "Type"
+msgstr "Tipo"
+
+#: includes/blocks/form/form-input/index.js:206
+msgid "Field name (name attribute)"
+msgstr "Nome do campo (atributo name)"
+
+#: includes/blocks/form/form-input/index.js:214
+msgid "Variant"
+msgstr "Variante"
+
+#: includes/blocks/form/form-input/index.js:217
+msgid "Default"
+msgstr "Padrão"
+
+#: includes/blocks/form/form-input/index.js:218
+msgid "Consent (LGPD)"
+msgstr "Consentimento (LGPD)"
+
+#: includes/blocks/form/form-input/index.js:228
+msgid "Placeholder"
+msgstr "Placeholder"
+
+#: includes/blocks/form/form-input/index.js:236
+msgid "Value"
+msgstr "Valor"
+
+#: includes/blocks/form/form-input/index.js:244
+msgid "Checked by default"
+msgstr "Marcado por padrão"
+
+#: includes/blocks/form/form-input/index.js:253
+msgid "Required"
+msgstr "Obrigatório"
+
+#: includes/blocks/form/form-input/index.js:262
+msgid "Hint text (optional)"
+msgstr "Texto de ajuda (opcional)"
+
+#: includes/blocks/form/form-input/index.js:270
+msgid "Options (one per line: Label|value)"
+msgstr "Opções (uma por linha: Rótulo|valor)"
+
+#: includes/blocks/form/form-input/index.js:271
+msgid "E.g.: Individual · CPF|cpf"
+msgstr "Ex.: Pessoa Física · CPF|cpf"
+
+#: includes/blocks/form/form-input/index.js:280
+msgid "Input mask (advanced)"
+msgstr "Máscara de entrada (avançado)"
+
+#: includes/blocks/form/form-input/index.js:282
+msgid "Mask"
+msgstr "Máscara"
+
+#: includes/blocks/form/form-input/index.js:291
+msgid "Field (name) that decides CPF vs. CNPJ"
+msgstr "Campo (name) que define CPF ou CNPJ"
+
+#: includes/blocks/form/form-input/index.js:292
+msgid "Name of the select field whose value (\"cpf\"/\"cnpj\") drives this mask."
+msgstr "Nome do campo select cujo valor (\"cpf\"/\"cnpj\") controla esta máscara."
+
+#: includes/blocks/form/form-input/block.json
+msgctxt "block title"
+msgid "Atelier Form Field"
+msgstr "Campo de Formulário do Atelier"
+
+#: includes/blocks/form/form-input/block.json
+msgctxt "block description"
+msgid "A form field: text, email, tel, number, textarea, select, consent checkbox, or hidden — with optional input masking (CPF/CNPJ, CEP, phone)."
+msgstr "Um campo de formulário: texto, e-mail, telefone, número, área de texto, select, checkbox de consentimento ou oculto — com máscara de entrada opcional (CPF/CNPJ, CEP, telefone)."
+
+#: includes/blocks/form/form-input/block.json
+msgctxt "block keyword"
+msgid "input"
+msgstr "campo"
+
+#: includes/blocks/form/form-input/block.json
+msgctxt "block keyword"
+msgid "field"
+msgstr "campo"
+
+#: includes/blocks/form/form-input/block.json
+#: includes/blocks/form/form/block.json
+msgctxt "block keyword"
+msgid "form"
+msgstr "formulário"
+
+#: includes/blocks/form/form/block.json
+msgctxt "block title"
+msgid "Atelier Form"
+msgstr "Formulário do Atelier"
+
+#: includes/blocks/form/form/block.json
+msgctxt "block description"
+msgid "Self-contained <form> wrapper for the Atelier Axell Club application form. Submission is client-side only at this phase (no backend yet)."
+msgstr "Wrapper <form> autocontido para o formulário de adesão do Atelier Axell Club. O envio é apenas client-side nesta fase (ainda sem backend)."
+
+#: includes/blocks/form/form/block.json
+msgctxt "block keyword"
+msgid "application"
+msgstr "adesão"
+
+#: includes/blocks/form/form/block.json
+msgctxt "block keyword"
+msgid "adesão"
+msgstr "adesão"
+

@@ -27,17 +27,17 @@ jobs:
             echo "✔  $label: $(grep -oE "$pattern" "$file" | head -1)"
           }
 
-          check_field "Plugin Name"       "Plugin Name:"                 "axellcore-atelierclub.php"
-          check_field "Version"           "Version: [0-9]+\.[0-9]"      "axellcore-atelierclub.php"
-          check_field "Requires at least" "Requires at least: [0-9]"    "axellcore-atelierclub.php"
-          check_field "Requires PHP"      "Requires PHP: [0-9]"         "axellcore-atelierclub.php"
-          check_field "License"           "License: GPL"                 "axellcore-atelierclub.php"
-          check_field "readme Stable tag" "Stable tag: [0-9]+\.[0-9]"  "readme.txt"
+          check_field "Plugin Name"       "Plugin Name:"                       "axellcore-atelierclub.php"
+          check_field "Version"           "Version:[[:space:]]*[0-9]+\.[0-9]"  "axellcore-atelierclub.php"
+          check_field "Requires at least" "Requires at least:[[:space:]]*[0-9]" "axellcore-atelierclub.php"
+          check_field "Requires PHP"      "Requires PHP:[[:space:]]*[0-9]"     "axellcore-atelierclub.php"
+          check_field "License"           "License:[[:space:]]*GPL"            "axellcore-atelierclub.php"
+          check_field "readme Stable tag" "Stable tag:[[:space:]]*[0-9]+\.[0-9]" "readme.txt"
 
       - name: Version == Stable tag
         run: |
-          MAIN=$(grep -oP "(?<=Version: )\S+" axellcore-atelierclub.php)
-          README=$(grep -oP "(?<=Stable tag: )\S+" readme.txt)
+          MAIN=$(grep -oP "(?<=Version:)[[:space:]]*\K\S+" axellcore-atelierclub.php)
+          README=$(grep -oP "(?<=Stable tag:)[[:space:]]*\K\S+" readme.txt)
           [ "$MAIN" = "$README" ] && echo "✔  Version: $MAIN" || { echo "✗  Mismatch: axellcore-atelierclub.php=$MAIN readme.txt=$README"; exit 1; }
 
   # ── PHPCS + WPCS + PHPCompatibility ──────────────────────────────────────────
@@ -67,13 +67,16 @@ jobs:
         run: composer lint
 
   # ── PHPUnit ──────────────────────────────────────────────────────────────────
+  # PHPUnit 10 requires PHP >= 8.1. Production code compat down to PHP 7.4 is
+  # checked via PHPCS/PHPCompatibilityWP above, not by running the test suite
+  # on 7.4 (phpunit/phpunit itself can't run there).
   phpunit:
     name: PHPUnit (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.4', '8.1', '8.2', '8.3' ]
+        php: [ '8.1', '8.2', '8.3' ]
 
     steps:
       - uses: actions/checkout@v4
