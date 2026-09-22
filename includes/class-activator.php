@@ -36,16 +36,24 @@ final class Activator {
 			return;
 		}
 
+		// The seed content is our own bundled, fully-trusted markup (not user
+		// input) — it includes <select>/<input>/<form> tags that KSES strips
+		// from post_content by default for accounts (or WP-CLI/no-user
+		// contexts) without unfiltered_html. Bypass KSES for this one insert.
+		kses_remove_filters();
+
 		$page_id = wp_insert_post(
 			array(
 				'post_type'    => 'page',
 				'post_title'   => __( 'Atelier Axell Club', 'axellcore-atelierclub' ),
 				'post_name'    => self::PAGE_SLUG,
 				'post_status'  => 'publish',
-				'post_content' => self::placeholder_content(),
+				'post_content' => self::seed_content(),
 			),
 			true
 		);
+
+		kses_init_filters();
 
 		if ( is_wp_error( $page_id ) || ! $page_id ) {
 			return;
@@ -57,12 +65,23 @@ final class Activator {
 	}
 
 	/**
-	 * Minimal placeholder content shown until the full landing-page sections
-	 * are authored in the block editor. Deliberately plain core blocks.
+	 * The full landing-page content, hand-authored as core-block markup
+	 * (see content/seed-content.html) so the page is pixel-accurate on first
+	 * activation yet still 100% panel-editable afterward. Falls back to a
+	 * minimal placeholder if the seed file is ever missing.
 	 *
 	 * @return string Serialized block markup.
 	 */
-	private static function placeholder_content(): string {
+	private static function seed_content(): string {
+		$seed_path = AXELLCORE_ATELIERCLUB_PATH . 'content/seed-content.html';
+
+		if ( file_exists( $seed_path ) ) {
+			$content = file_get_contents( $seed_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			if ( false !== $content && '' !== trim( $content ) ) {
+				return $content;
+			}
+		}
+
 		return implode(
 			"\n",
 			array(
