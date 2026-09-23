@@ -58,6 +58,45 @@ final class TemplateLoaderTest extends TestCase {
 		$this->addToAssertionCount( 1 );
 	}
 
+	public function test_register_noclass_template_registers_with_the_noclass_template_name(): void {
+		Functions\when( 'file_exists' )->justReturn( true );
+		Functions\when( 'file_get_contents' )->justReturn( "<!-- wp:post-content /-->\n" );
+		Functions\when( '__' )->returnArg( 1 );
+
+		Functions\expect( 'register_block_template' )
+			->once()
+			->with(
+				Plugin::NOCLASS_TEMPLATE_NAME,
+				\Mockery::on(
+					function ( $args ) {
+						return array( 'page' ) === $args['post_types'];
+					}
+				)
+			);
+
+		Template_Loader::instance()->register_noclass_template();
+
+		$this->addToAssertionCount( 1 );
+	}
+
+	public function test_enable_position_sticky_merges_position_sticky_setting(): void {
+		$theme_json = \Mockery::mock( 'WP_Theme_JSON_Data' );
+		$theme_json->shouldReceive( 'update_with' )
+			->once()
+			->with(
+				\Mockery::on(
+					function ( $data ) {
+						return true === ( $data['settings']['position']['sticky'] ?? null );
+					}
+				)
+			)
+			->andReturn( 'merged' );
+
+		$result = Template_Loader::instance()->enable_position_sticky( $theme_json );
+
+		$this->assertSame( 'merged', $result );
+	}
+
 	/**
 	 * Regression test for a real WP-core bug reproduced on this install:
 	 * WP_Block_Templates_Registry::get_by_query() returns matches keyed by

@@ -8,6 +8,7 @@ declare( strict_types=1 );
 namespace Axellcore_Atelierclub\Tests;
 
 use Axellcore_Atelierclub\Assets;
+use Axellcore_Atelierclub\Plugin;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 use PHPUnit\Framework\TestCase;
@@ -76,7 +77,11 @@ final class AssetsTest extends TestCase {
 	}
 
 	public function test_enqueue_frontend_assets_enqueues_fonts_tokens_sections_and_frontend_js(): void {
-		Functions\when( 'is_page_template' )->justReturn( true );
+		Functions\when( 'is_page_template' )->alias(
+			function ( $slug ) {
+				return Plugin::TEMPLATE_SLUG === $slug;
+			}
+		);
 
 		Functions\expect( 'wp_enqueue_style' )
 			->with( 'aac-google-fonts', \Mockery::type( 'string' ), array(), null )
@@ -100,6 +105,24 @@ final class AssetsTest extends TestCase {
 		Functions\expect( 'wp_localize_script' )
 			->with( 'aac-frontend', 'aacRest', array( 'root' => 'https://example.com/wp-json/axellcore-atelierclub/v1/' ) )
 			->once();
+
+		Assets::instance()->enqueue_frontend_assets();
+
+		$this->addToAssertionCount( 1 );
+	}
+
+	public function test_enqueue_frontend_assets_on_noclass_template_enqueues_only_fonts(): void {
+		Functions\when( 'is_page_template' )->alias(
+			function ( $slug ) {
+				return Plugin::NOCLASS_TEMPLATE_SLUG === $slug;
+			}
+		);
+
+		Functions\expect( 'wp_enqueue_style' )
+			->with( 'aac-google-fonts', \Mockery::type( 'string' ), array(), null )
+			->once();
+		Functions\expect( 'wp_enqueue_script' )->never();
+		Functions\expect( 'wp_localize_script' )->never();
 
 		Assets::instance()->enqueue_frontend_assets();
 

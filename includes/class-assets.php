@@ -52,7 +52,8 @@ final class Assets {
 	}
 
 	/**
-	 * Whether the current request is rendering our landing page template.
+	 * Whether the current request is rendering our (production) landing
+	 * page template.
 	 *
 	 * @return bool
 	 */
@@ -61,12 +62,33 @@ final class Assets {
 	}
 
 	/**
+	 * Whether the current request is rendering the /atelier-noclass
+	 * experimental template.
+	 *
+	 * @return bool
+	 */
+	private function is_noclass_template() {
+		return is_page_template( Plugin::NOCLASS_TEMPLATE_SLUG );
+	}
+
+	/**
+	 * Either of the two isolated templates — used for theme/core CSS
+	 * stripping and the Google Fonts preconnect hint, which both templates
+	 * need regardless of which one's own asset bundle (if any) is enqueued.
+	 *
+	 * @return bool
+	 */
+	private function is_isolated_template() {
+		return $this->is_our_template() || $this->is_noclass_template();
+	}
+
+	/**
 	 * Remove the active theme's stylesheet and WP core's unconditional
 	 * global-styles/block-library CSS + emoji script on our template only.
 	 * Handles confirmed by directly curl-ing this install's homepage <head>.
 	 */
 	public function strip_theme_and_core_assets() {
-		if ( ! $this->is_our_template() ) {
+		if ( ! $this->is_isolated_template() ) {
 			return;
 		}
 
@@ -92,9 +114,17 @@ final class Assets {
 	}
 
 	/**
-	 * Enqueue our own design tokens, section CSS, and frontend JS.
+	 * Enqueue our own design tokens, section CSS, and frontend JS — the
+	 * production template only. /atelier-noclass deliberately gets NO
+	 * custom stylesheet and no frontend.js at all (see enqueue_noclass_fonts())
+	 * — that's the whole point of the experiment.
 	 */
 	public function enqueue_frontend_assets() {
+		if ( $this->is_noclass_template() ) {
+			$this->enqueue_noclass_fonts();
+			return;
+		}
+
 		if ( ! $this->is_our_template() ) {
 			return;
 		}
@@ -132,6 +162,21 @@ final class Assets {
 	}
 
 	/**
+	 * /atelier-noclass still needs the two webfonts (Cormorant Garamond,
+	 * Inter) — loading a font isn't "styling via a CSS class", it's a
+	 * resource every block's native fontFamily attribute references — but
+	 * nothing else: no aac-*.css, no frontend.js.
+	 */
+	private function enqueue_noclass_fonts() {
+		wp_enqueue_style(
+			'aac-google-fonts',
+			'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap',
+			array(),
+			null // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- external URL, WP doesn't own its versioning.
+		);
+	}
+
+	/**
 	 * Add the Google Fonts preconnect hints the source mockup uses, matching
 	 * the original <link rel="preconnect"> tags exactly.
 	 *
@@ -140,7 +185,7 @@ final class Assets {
 	 * @return array
 	 */
 	public function add_google_fonts_preconnect( $urls, $relation_type ) {
-		if ( 'preconnect' !== $relation_type || ! $this->is_our_template() ) {
+		if ( 'preconnect' !== $relation_type || ! $this->is_isolated_template() ) {
 			return $urls;
 		}
 
