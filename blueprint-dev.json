@@ -2,6 +2,7 @@
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
 	"preferredVersions": { "php": "8.2", "wp": "latest" },
 	"features": { "networking": true },
+	"landingPage": "/atelier",
 	"steps": [
 		{ "step": "login", "username": "admin", "password": "password" },
 		{
@@ -19,7 +20,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php require '/wordpress/wp-load.php'; $page = get_page_by_path( 'atelier-club' ); wp_safe_redirect( $page ? get_permalink( $page ) : home_url() ); exit;"
+			"code": "<?php require '/wordpress/wp-load.php'; global $wp_rewrite; $wp_rewrite->set_permalink_structure( '/%postname%/' ); $wp_rewrite->flush_rules();"
 		}
 	]
 }

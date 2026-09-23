@@ -1,9 +1,12 @@
 <?php
 /**
- * Runs on plugin activation: creates the `/atelier-club` page (assigned to
- * our FSE template) if it doesn't already exist yet, so the plugin is
- * self-provisioning — a fresh install (including a WordPress Playground
- * preview) lands on a working page with zero manual setup.
+ * Runs on plugin activation: creates the `/atelier` page (assigned to
+ * our FSE template) plus its "Header" and "Footer" FSE Template Parts, if
+ * they don't already exist yet — so the plugin is self-provisioning (a
+ * fresh install, including a WordPress Playground preview, lands on a
+ * working page with zero manual setup) and the nav/footer chrome is edited
+ * separately from the page content, the same way a real block theme
+ * organizes them (Site Editor → Patterns → Template Parts → Header/Footer).
  *
  * @package Axellcore_Atelierclub
  */
@@ -22,38 +25,61 @@ final class Activator {
 	/**
 	 * The page slug this plugin owns.
 	 */
-	const PAGE_SLUG = 'atelier-club';
+	const PAGE_SLUG = 'atelier';
 
 	/**
-	 * Create the Atelier Club page if it isn't already there.
+	 * Template part slugs — match the `slug` attribute on the
+	 * `core/template-part` blocks in templates/atelier-club.html.
+	 */
+	const HEADER_SLUG = 'axellcore-header';
+	const FOOTER_SLUG = 'axellcore-footer';
+
+	/**
+	 * Create the Atelier Club page and its two template parts if they
+	 * aren't already there.
 	 *
 	 * Idempotent: safe to run on every activation (e.g. deactivate/reactivate)
 	 * without creating duplicates.
 	 */
 	public static function activate() {
+		self::create_template_part(
+			self::HEADER_SLUG,
+			__( 'Atelier — Header', 'axellcore-atelierclub' ),
+			'header',
+			AXELLCORE_ATELIERCLUB_PATH . 'content/header-part.html'
+		);
+
+		self::create_template_part(
+			self::FOOTER_SLUG,
+			__( 'Atelier — Footer', 'axellcore-atelierclub' ),
+			'footer',
+			AXELLCORE_ATELIERCLUB_PATH . 'content/footer-part.html'
+		);
+
+		self::create_page();
+	}
+
+	/**
+	 * Create the /atelier page if it doesn't already exist.
+	 */
+	private static function create_page() {
 		$existing = get_page_by_path( self::PAGE_SLUG, OBJECT, 'page' );
 		if ( $existing instanceof \WP_Post ) {
 			return;
 		}
 
-		// The seed content is our own bundled, fully-trusted markup (not user
-		// input) — it includes <select>/<input>/<form> tags that KSES strips
-		// from post_content by default for accounts (or WP-CLI/no-user
-		// contexts) without unfiltered_html. Bypass KSES for this one insert.
-		kses_remove_filters();
-
-		$page_id = wp_insert_post(
+		$page_id = self::insert_trusted_content(
 			array(
 				'post_type'    => 'page',
 				'post_title'   => __( 'Atelier Axell Club', 'axellcore-atelierclub' ),
 				'post_name'    => self::PAGE_SLUG,
 				'post_status'  => 'publish',
-				'post_content' => self::seed_content(),
-			),
-			true
+				'post_content' => self::read_content_file(
+					AXELLCORE_ATELIERCLUB_PATH . 'content/seed-content.html',
+					self::placeholder_content()
+				),
+			)
 		);
-
-		kses_init_filters();
 
 		if ( is_wp_error( $page_id ) || ! $page_id ) {
 			return;
@@ -65,23 +91,98 @@ final class Activator {
 	}
 
 	/**
-	 * The full landing-page content, hand-authored as core-block markup
-	 * (see content/seed-content.html) so the page is pixel-accurate on first
-	 * activation yet still 100% panel-editable afterward. Falls back to a
-	 * minimal placeholder if the seed file is ever missing.
+	 * Create a `wp_template_part` post (Header or Footer) if one with this
+	 * slug doesn't already exist for the active theme.
 	 *
-	 * @return string Serialized block markup.
+	 * Deliberately a real database post (not a `register_block_template()`
+	 * registry entry): `core/template-part` looks up header/footer parts via
+	 * a direct `WP_Query` for `post_type => wp_template_part` — it never
+	 * touches `get_block_templates()`/`WP_Block_Templates_Registry` at all,
+	 * so this sidesteps the core associative-array-keys bug worked around in
+	 * Template_Loader::reindex_block_templates() (that bug is specific to
+	 * the *registry* merge path, not to real `wp_template_part` posts).
+	 *
+	 * @param string $slug         Template part slug (post_name).
+	 * @param string $title        Human-readable title.
+	 * @param string $area         'header' or 'footer' (wp_template_part_area taxonomy term).
+	 * @param string $content_file Absolute path to the block-markup content file.
 	 */
-	private static function seed_content(): string {
-		$seed_path = AXELLCORE_ATELIERCLUB_PATH . 'content/seed-content.html';
+	private static function create_template_part( string $slug, string $title, string $area, string $content_file ) {
+		$existing = get_posts(
+			array(
+				'post_type'      => 'wp_template_part',
+				'name'           => $slug,
+				'post_status'    => array( 'publish', 'auto-draft', 'draft' ),
+				'posts_per_page' => 1,
+				'no_found_rows'  => true,
+			)
+		);
 
-		if ( file_exists( $seed_path ) ) {
-			$content = file_get_contents( $seed_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		if ( ! empty( $existing ) ) {
+			return;
+		}
+
+		$post_id = self::insert_trusted_content(
+			array(
+				'post_type'    => 'wp_template_part',
+				'post_title'   => $title,
+				'post_name'    => $slug,
+				'post_status'  => 'publish',
+				'post_content' => self::read_content_file( $content_file, '' ),
+			)
+		);
+
+		if ( is_wp_error( $post_id ) || ! $post_id ) {
+			return;
+		}
+
+		wp_set_post_terms( $post_id, array( get_stylesheet() ), 'wp_theme' );
+		wp_set_post_terms( $post_id, array( $area ), 'wp_template_part_area' );
+	}
+
+	/**
+	 * Calls wp_insert_post(), with KSES bypassed for the duration of the call.
+	 *
+	 * All content inserted here is our own bundled, fully-trusted markup
+	 * (never user input) — it includes <select>/<input>/<form> tags that
+	 * KSES strips from post_content by default for accounts (or WP-CLI/
+	 * no-user contexts, e.g. plugin activation via `wp plugin activate`)
+	 * without the unfiltered_html capability.
+	 *
+	 * @param array $postarr wp_insert_post() args.
+	 * @return int|\WP_Error
+	 */
+	private static function insert_trusted_content( array $postarr ) {
+		kses_remove_filters();
+		$result = wp_insert_post( $postarr, true );
+		kses_init_filters();
+		return $result;
+	}
+
+	/**
+	 * Read a bundled content file, or fall back to $fallback if missing/empty.
+	 *
+	 * @param string $path     Absolute file path.
+	 * @param string $fallback Fallback content.
+	 * @return string
+	 */
+	private static function read_content_file( string $path, string $fallback ): string {
+		if ( file_exists( $path ) ) {
+			$content = file_get_contents( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 			if ( false !== $content && '' !== trim( $content ) ) {
 				return $content;
 			}
 		}
+		return $fallback;
+	}
 
+	/**
+	 * Minimal placeholder content shown until the full landing-page sections
+	 * are authored in the block editor. Deliberately plain core blocks.
+	 *
+	 * @return string Serialized block markup.
+	 */
+	private static function placeholder_content(): string {
 		return implode(
 			"\n",
 			array(
