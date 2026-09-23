@@ -289,8 +289,45 @@ actual page copy).
 
 ## 9. What's still worth doing next
 
-1. The editor-canvas CSS gap (§3) — `enqueue_block_editor_assets`, scoped to
+1. **Planned next session** (§10): retire `/atelier-noclass`, apply what it
+   proved to the production page, target 0.00% visual regression vs. the
+   source mockup via screenshot comparison.
+2. The editor-canvas CSS gap (§3) — `enqueue_block_editor_assets`, scoped to
    this template.
-2. The page-content i18n project (§7) — a genuinely large piece of work,
+3. The page-content i18n project (§7) — a genuinely large piece of work,
    separate from the two i18n bugs already fixed.
-3. Nothing else here is a known blocker.
+4. Nothing else here is a known blocker.
+
+---
+
+## 10. Group: `/atelier-noclass` — an experiment, not a second production page
+
+`/atelier-noclass` (`bin/generate-noclass-content.py`,
+`templates/atelier-club-noclass.html`, `content/noclass-full.html`) proved
+that this design is achievable almost entirely via native block style
+attributes instead of `aac-` CSS classes — see the
+`wp-native-block-styling` global skill (`~/.claude/skills/`) for the full,
+reusable writeup of what was learned (which block supports process
+server-side vs. purely in the editor, the `position:sticky`/`layout`
+theme.json gotchas, the confirmed hard limits).
+
+**Explicit plan for the next session**: this was always meant to be a
+scouting exercise, not a permanent second page. The next step is to:
+1. Retire the `/atelier-noclass` template/page/generator entirely (they
+   don't ship — no reason to maintain two parallel content pipelines).
+2. Apply the same native-attribute-first approach directly to the
+   *production* `/atelier` page/generator (`bin/generate-content.py`),
+   replacing `aac-` classes wherever a native attribute genuinely covers
+   it, and keeping `assets/css/sections.css` only for the confirmed hard
+   limits (CSS counters/pseudo-elements/backdrop-filter/transitions/
+   multi-layer gradients — see the skill for the exact list).
+3. Verify with **0.00% visual regression** against the original approved
+   mockup (`atelier-axell-club.html`), via direct screenshot comparison
+   (chrome-devtools MCP), not just "looks close" — the noclass experiment
+   was judged that way because it was explicitly a proof-of-concept; the
+   production page is held to full pixel parity, same as it always has
+   been since `0.1.0`.
+
+Until that work happens, `/atelier-noclass` remains live for reference but
+should not be extended further (no form section, no fixes beyond what's
+already there) — it's disposable scaffolding for the real task.
