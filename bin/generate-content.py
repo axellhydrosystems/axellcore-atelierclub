@@ -607,7 +607,7 @@ def footer_section():
 # ============================================================
 # APPLY FORM (axellcore/form + axellcore/form-input)
 # ============================================================
-def _field_control_html(type_, name, required, placeholder, mask, mask_source, options, checked, value):
+def _field_control_html(type_, name, required, placeholder, mask, mask_source, options, checked, value, cities_source=""):
     """Python port of form-input/index.js's FieldControl(attrs, isSave=true) —
     must match exactly, since this block is static (no PHP render): whatever
     HTML we embed here IS what the frontend outputs, verbatim."""
@@ -626,7 +626,12 @@ def _field_control_html(type_, name, required, placeholder, mask, mask_source, o
         opts = f'<option value="">{placeholder or "Select an option"}</option>'
         for o in (options or []):
             opts += f'<option value="{o["value"]}">{o["label"]}</option>'
-        return f'<select{common}>{opts}</select>'
+        select_extra = ''
+        if cities_source:
+            # Starts empty (frontend.js populates it once the source field
+            # has a value) — disabled until then.
+            select_extra = f' data-aac-cities-source="{cities_source}" disabled=""'
+        return f'<select{common}{select_extra}>{opts}</select>'
 
     if type_ == 'checkbox':
         chk = ' checked=""' if checked else ''
@@ -651,7 +656,7 @@ def _field_wrapper_html(type_, variant, required, hint, label_html, field_html):
     hint_div = f'<div class="aac-hint">{hint}</div>' if hint else ''
     return f'<div class="aac-field {base_class}"><label>{label_span}{req_span}</label>{field_html}{hint_div}</div>'
 
-def form_input(type_, name, label, required=False, placeholder="", hint="", options=None, mask="", mask_source="", variant="field", value="", checked=False):
+def form_input(type_, name, label, required=False, placeholder="", hint="", options=None, mask="", mask_source="", variant="field", value="", checked=False, cities_source=""):
     # `label` is intentionally NOT included in the comment JSON: block.json
     # declares it `source:"rich-text", selector:".aac-field-label-text"`,
     # meaning WordPress derives its value from the stored HTML itself, not
@@ -675,6 +680,8 @@ def form_input(type_, name, label, required=False, placeholder="", hint="", opti
         attrs["mask"] = mask
     if mask_source:
         attrs["maskSourceName"] = mask_source
+    if cities_source:
+        attrs["citiesSourceName"] = cities_source
     if variant != "field":
         attrs["variant"] = variant
     if value:
@@ -682,7 +689,7 @@ def form_input(type_, name, label, required=False, placeholder="", hint="", opti
     if checked:
         attrs["checked"] = True
 
-    field_html = _field_control_html(type_, name, required, placeholder, mask, mask_source, options, checked, value)
+    field_html = _field_control_html(type_, name, required, placeholder, mask, mask_source, options, checked, value, cities_source)
     wrapped = _field_wrapper_html(type_, variant, required, hint, label, field_html)
 
     OUT.append(f'<!-- wp:axellcore/form-input {esc_attrs(attrs)} -->')
@@ -764,10 +771,15 @@ def apply_section():
                 form_input('text', 'referencia', 'Referência', False, 'Próximo a…')
             form_row('aac-cols-2', row3b)
             def row3c():
-                form_input('text', 'cidade', 'Cidade', True, 'São Paulo')
+                # UF drives the Cidade select: choosing a state fetches and
+                # populates that state's cities (assets/js/frontend.js,
+                # GET /axellcore-atelierclub/v1/cities?uf=XX — data adapted
+                # from fervidum/f9brcities, see includes/data/br-*.php).
+                # UF must come first so it's usable before Cidade exists.
                 uf_options = [{"label": s, "value": s} for s in
                     ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']]
                 form_input('select', 'uf', 'UF', True, placeholder='—', options=uf_options)
+                form_input('select', 'cidade', 'Cidade', True, placeholder='Selecione o estado', cities_source='uf')
                 form_input('text', 'cep', 'CEP', True, '00000-000', mask='cep')
             form_row('aac-cols-city', row3c)
 

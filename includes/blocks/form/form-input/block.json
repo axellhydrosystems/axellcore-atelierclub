@@ -25,7 +25,8 @@
 		"checked": { "type": "boolean", "default": false },
 		"options": { "type": "array", "default": [] },
 		"mask": { "type": "string", "default": "" },
-		"maskSourceName": { "type": "string", "default": "" }
+		"maskSourceName": { "type": "string", "default": "" },
+		"citiesSourceName": { "type": "string", "default": "" }
 	},
 	"supports": {
 		"html": false,

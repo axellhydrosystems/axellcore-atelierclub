@@ -94,6 +94,13 @@ final class AssetsTest extends TestCase {
 			->with( 'aac-frontend', \Mockery::type( 'string' ), array(), AXELLCORE_ATELIERCLUB_VERSION, \Mockery::type( 'array' ) )
 			->once();
 
+		Functions\when( 'rest_url' )->justReturn( 'https://example.com/wp-json/axellcore-atelierclub/v1' );
+		Functions\when( 'trailingslashit' )->justReturn( 'https://example.com/wp-json/axellcore-atelierclub/v1/' );
+		Functions\when( 'esc_url_raw' )->returnArg( 1 );
+		Functions\expect( 'wp_localize_script' )
+			->with( 'aac-frontend', 'aacRest', array( 'root' => 'https://example.com/wp-json/axellcore-atelierclub/v1/' ) )
+			->once();
+
 		Assets::instance()->enqueue_frontend_assets();
 
 		$this->addToAssertionCount( 1 );

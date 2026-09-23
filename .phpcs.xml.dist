@@ -14,6 +14,10 @@
 	<exclude-pattern>bin/</exclude-pattern>
 	<exclude-pattern>phpstan-bootstrap.php</exclude-pattern>
 	<exclude-pattern>*.asset.php</exclude-pattern>
+	<!-- Generated reference data (Brazilian states/cities dataset adapted from
+	     fervidum/f9brcities), not hand-authored logic — same treatment as
+	     content/*.html (build output, not style-enforced source). -->
+	<exclude-pattern>includes/data/</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
 	<arg name="colors"/>

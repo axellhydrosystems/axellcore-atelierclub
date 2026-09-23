@@ -67,5 +67,8 @@ final class Plugin {
 		Assets::instance()->register_hooks();
 		Blocks::instance()->register_hooks();
 		Icons::instance()->register_hooks();
+		Member::instance()->register_hooks();
+		Locations::instance()->register_hooks();
+		Rest::instance()->register_hooks();
 	}
 }

@@ -224,10 +224,59 @@
 	} );
 
 	/* ---------------------------------------------------------------------
-	 * Submit handler — client-side only for this phase (no backend yet).
-	 * Any <form data-aac-club-form> gets the exact same UX as the source
-	 * mockup: validate, reset, alert. Real submission (WP user creation,
-	 * CSV/ERP export, etc.) is a later phase, not wired here.
+	 * State → city cascading select — driven by data-aac-cities-source="…"
+	 * (the name of the sibling <select> whose value is a 2-letter UF) on a
+	 * <select data-aac-cities-source>, fetching from the REST cities
+	 * endpoint (includes/class-rest.php; data adapted from
+	 * fervidum/f9brcities — see includes/data/br-*.php). Starts disabled;
+	 * enabled once populated.
+	 * ------------------------------------------------------------------- */
+	document.querySelectorAll( '[data-aac-cities-source]' ).forEach( function ( citySelect ) {
+		var form = citySelect.closest( 'form' );
+		var sourceName = citySelect.getAttribute( 'data-aac-cities-source' );
+		var source = sourceName && form ? form.elements.namedItem( sourceName ) : null;
+		if ( ! source || ! window.aacRest || ! window.aacRest.root ) {
+			return;
+		}
+
+		var placeholder = citySelect.querySelector( 'option[value=""]' );
+		var placeholderText = placeholder ? placeholder.textContent : '';
+
+		source.addEventListener( 'change', function () {
+			var uf = source.value;
+			citySelect.innerHTML = '';
+			citySelect.disabled = true;
+
+			if ( ! uf ) {
+				citySelect.appendChild( new Option( placeholderText, '' ) );
+				return;
+			}
+
+			citySelect.appendChild( new Option( 'Carregando cidades…', '' ) );
+
+			fetch( window.aacRest.root + 'cities?uf=' + encodeURIComponent( uf ) )
+				.then( function ( response ) {
+					return response.ok ? response.json() : Promise.reject( response );
+				} )
+				.then( function ( cities ) {
+					citySelect.innerHTML = '';
+					citySelect.appendChild( new Option( placeholderText || 'Selecione', '' ) );
+					cities.forEach( function ( city ) {
+						citySelect.appendChild( new Option( city.label, city.value ) );
+					} );
+					citySelect.disabled = false;
+				} )
+				.catch( function () {
+					citySelect.innerHTML = '';
+					citySelect.appendChild( new Option( 'Não foi possível carregar as cidades.', '' ) );
+				} );
+		} );
+	} );
+
+	/* ---------------------------------------------------------------------
+	 * Submit handler — POSTs to the real REST endpoint
+	 * (includes/class-rest.php's /members route), which creates the
+	 * aac_member post and resolves the Country > State > City taxonomy term.
 	 * ------------------------------------------------------------------- */
 	document.querySelectorAll( 'form[data-aac-club-form]' ).forEach( function ( form ) {
 		form.addEventListener( 'submit', function ( e ) {
@@ -236,10 +285,46 @@
 				form.reportValidity();
 				return;
 			}
-			form.reset();
-			window.alert(
-				'Sua solicitação foi enviada.\n\nA curadoria Axell entrará em contato em breve com o próximo passo.\n\nBem-vindo(a) ao Atelier.'
-			);
+			if ( ! window.aacRest || ! window.aacRest.root ) {
+				return;
+			}
+
+			var submitBtn = form.querySelector( 'button[type="submit"]' );
+			if ( submitBtn ) {
+				submitBtn.disabled = true;
+			}
+
+			var data = Object.fromEntries( new FormData( form ).entries() );
+
+			fetch( window.aacRest.root + 'members', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify( data ),
+			} )
+				.then( function ( response ) {
+					return response.json().then( function ( body ) {
+						return { ok: response.ok, body: body };
+					} );
+				} )
+				.then( function ( result ) {
+					if ( ! result.ok ) {
+						throw new Error( ( result.body && result.body.message ) || 'Erro ao enviar.' );
+					}
+					form.reset();
+					window.alert(
+						'Sua solicitação foi enviada.\n\nA curadoria Axell entrará em contato em breve com o próximo passo.\n\nBem-vindo(a) ao Atelier.'
+					);
+				} )
+				.catch( function ( error ) {
+					window.alert(
+						'Não foi possível enviar sua solicitação. Tente novamente em instantes.\n\n' + error.message
+					);
+				} )
+				.finally( function () {
+					if ( submitBtn ) {
+						submitBtn.disabled = false;
+					}
+				} );
 		} );
 	} );
 } )();

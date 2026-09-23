@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T01:31:33+00:00\n"
+"POT-Creation-Date: 2026-09-23T13:31:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axellcore-atelierclub\n"
@@ -67,6 +67,76 @@ msgstr ""
 
 #: includes/class-icons.php:98
 msgid "Clock"
+msgstr ""
+
+#: includes/class-locations.php:106
+msgid "Locations"
+msgstr ""
+
+#: includes/class-locations.php:107
+msgid "Location"
+msgstr ""
+
+#: includes/class-locations.php:175
+msgid "Brazil"
+msgstr ""
+
+#: includes/class-member.php:66
+msgid "Members"
+msgstr ""
+
+#: includes/class-member.php:67
+msgid "Member"
+msgstr ""
+
+#: includes/class-member.php:68
+msgid "Add New Member"
+msgstr ""
+
+#: includes/class-member.php:69
+msgid "Edit Member"
+msgstr ""
+
+#: includes/class-member.php:70
+msgid "View Member"
+msgstr ""
+
+#: includes/class-member.php:71
+msgid "Search Members"
+msgstr ""
+
+#: includes/class-member.php:72
+msgid "No members found."
+msgstr ""
+
+#: includes/class-member.php:73
+msgid "No members found in Trash."
+msgstr ""
+
+#: includes/class-member.php:74
+msgid "All Members"
+msgstr ""
+
+#: includes/class-member.php:76
+msgid "A submitted Atelier Axell Club application."
+msgstr ""
+
+#. translators: %s: form field name.
+#: includes/class-rest.php:192
+#, php-format
+msgid "Missing required field: %s"
+msgstr ""
+
+#: includes/class-rest.php:200
+msgid "Invalid email address."
+msgstr ""
+
+#: includes/class-rest.php:207
+msgid "Invalid state/city."
+msgstr ""
+
+#: includes/class-rest.php:220
+msgid "Could not save your application."
 msgstr ""
 
 #: includes/class-template-loader.php:74
@@ -130,79 +200,87 @@ msgstr ""
 msgid "CEP (postal code)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:103
+#: includes/blocks/form/form-input/index.js:110
 msgid "Select an option"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:184
+#: includes/blocks/form/form-input/index.js:191
 msgid "Field label…"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:196
+#: includes/blocks/form/form-input/index.js:203
 msgid "Field"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:198
+#: includes/blocks/form/form-input/index.js:205
 msgid "Type"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:206
+#: includes/blocks/form/form-input/index.js:213
 msgid "Field name (name attribute)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:214
+#: includes/blocks/form/form-input/index.js:221
 msgid "Variant"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:217
+#: includes/blocks/form/form-input/index.js:224
 msgid "Default"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:218
+#: includes/blocks/form/form-input/index.js:225
 msgid "Consent (LGPD)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:228
+#: includes/blocks/form/form-input/index.js:235
 msgid "Placeholder"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:236
+#: includes/blocks/form/form-input/index.js:243
 msgid "Value"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:244
+#: includes/blocks/form/form-input/index.js:251
 msgid "Checked by default"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:253
+#: includes/blocks/form/form-input/index.js:260
 msgid "Required"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:262
+#: includes/blocks/form/form-input/index.js:269
 msgid "Hint text (optional)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:270
+#: includes/blocks/form/form-input/index.js:277
 msgid "Options (one per line: Label|value)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:271
+#: includes/blocks/form/form-input/index.js:278
 msgid "E.g.: Individual · CPF|cpf"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:280
+#: includes/blocks/form/form-input/index.js:286
+msgid "Field (name) that populates these options"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:287
+msgid "Leave empty for a static list. If set, this select starts empty/disabled and assets/js/frontend.js fetches its options from the REST cities endpoint whenever that field changes."
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:296
 msgid "Input mask (advanced)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:282
+#: includes/blocks/form/form-input/index.js:298
 msgid "Mask"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:291
+#: includes/blocks/form/form-input/index.js:307
 msgid "Field (name) that decides CPF vs. CNPJ"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:292
+#: includes/blocks/form/form-input/index.js:308
 msgid "Name of the select field whose value (\"cpf\"/\"cnpj\") drives this mask."
 msgstr ""
 
@@ -276,7 +354,7 @@ msgstr ""
 
 #: includes/blocks/form/form/block.json
 msgctxt "block description"
-msgid "Self-contained <form> wrapper for the Atelier Axell Club application form. Submission is client-side only at this phase (no backend yet)."
+msgid "Self-contained <form> wrapper for the Atelier Axell Club application form. Submits to the plugin's REST endpoint, which creates an aac_member post and resolves its Country/State/City taxonomy term."
 msgstr ""
 
 #: includes/blocks/form/form/block.json

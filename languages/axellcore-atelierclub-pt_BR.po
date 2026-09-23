@@ -91,79 +91,79 @@ msgstr "CPF / CNPJ"
 msgid "CEP (postal code)"
 msgstr "CEP"
 
-#: includes/blocks/form/form-input/index.js:103
+#: includes/blocks/form/form-input/index.js:110
 msgid "Select an option"
 msgstr "Selecione uma opção"
 
-#: includes/blocks/form/form-input/index.js:184
+#: includes/blocks/form/form-input/index.js:191
 msgid "Field label…"
 msgstr "Rótulo do campo…"
 
-#: includes/blocks/form/form-input/index.js:196
+#: includes/blocks/form/form-input/index.js:203
 msgid "Field"
 msgstr "Campo"
 
-#: includes/blocks/form/form-input/index.js:198
+#: includes/blocks/form/form-input/index.js:205
 msgid "Type"
 msgstr "Tipo"
 
-#: includes/blocks/form/form-input/index.js:206
+#: includes/blocks/form/form-input/index.js:213
 msgid "Field name (name attribute)"
 msgstr "Nome do campo (atributo name)"
 
-#: includes/blocks/form/form-input/index.js:214
+#: includes/blocks/form/form-input/index.js:221
 msgid "Variant"
 msgstr "Variante"
 
-#: includes/blocks/form/form-input/index.js:217
+#: includes/blocks/form/form-input/index.js:224
 msgid "Default"
 msgstr "Padrão"
 
-#: includes/blocks/form/form-input/index.js:218
+#: includes/blocks/form/form-input/index.js:225
 msgid "Consent (LGPD)"
 msgstr "Consentimento (LGPD)"
 
-#: includes/blocks/form/form-input/index.js:228
+#: includes/blocks/form/form-input/index.js:235
 msgid "Placeholder"
 msgstr "Placeholder"
 
-#: includes/blocks/form/form-input/index.js:236
+#: includes/blocks/form/form-input/index.js:243
 msgid "Value"
 msgstr "Valor"
 
-#: includes/blocks/form/form-input/index.js:244
+#: includes/blocks/form/form-input/index.js:251
 msgid "Checked by default"
 msgstr "Marcado por padrão"
 
-#: includes/blocks/form/form-input/index.js:253
+#: includes/blocks/form/form-input/index.js:260
 msgid "Required"
 msgstr "Obrigatório"
 
-#: includes/blocks/form/form-input/index.js:262
+#: includes/blocks/form/form-input/index.js:269
 msgid "Hint text (optional)"
 msgstr "Texto de ajuda (opcional)"
 
-#: includes/blocks/form/form-input/index.js:270
+#: includes/blocks/form/form-input/index.js:277
 msgid "Options (one per line: Label|value)"
 msgstr "Opções (uma por linha: Rótulo|valor)"
 
-#: includes/blocks/form/form-input/index.js:271
+#: includes/blocks/form/form-input/index.js:278
 msgid "E.g.: Individual · CPF|cpf"
 msgstr "Ex.: Pessoa Física · CPF|cpf"
 
-#: includes/blocks/form/form-input/index.js:280
+#: includes/blocks/form/form-input/index.js:296
 msgid "Input mask (advanced)"
 msgstr "Máscara de entrada (avançado)"
 
-#: includes/blocks/form/form-input/index.js:282
+#: includes/blocks/form/form-input/index.js:298
 msgid "Mask"
 msgstr "Máscara"
 
-#: includes/blocks/form/form-input/index.js:291
+#: includes/blocks/form/form-input/index.js:307
 msgid "Field (name) that decides CPF vs. CNPJ"
 msgstr "Campo (name) que define CPF ou CNPJ"
 
-#: includes/blocks/form/form-input/index.js:292
+#: includes/blocks/form/form-input/index.js:308
 msgid "Name of the select field whose value (\"cpf\"/\"cnpj\") drives this mask."
 msgstr "Nome do campo select cujo valor (\"cpf\"/\"cnpj\") controla esta máscara."
 
@@ -197,11 +197,6 @@ msgstr "formulário"
 msgctxt "block title"
 msgid "Atelier Form"
 msgstr "Formulário do Atelier"
-
-#: includes/blocks/form/form/block.json
-msgctxt "block description"
-msgid "Self-contained <form> wrapper for the Atelier Axell Club application form. Submission is client-side only at this phase (no backend yet)."
-msgstr "Wrapper <form> autocontido para o formulário de adesão do Atelier Axell Club. O envio é apenas client-side nesta fase (ainda sem backend)."
 
 #: includes/blocks/form/form/block.json
 msgctxt "block keyword"
@@ -288,3 +283,86 @@ msgstr "Agrupa os capítulos numerados da página (axellcore/chapter) e estabele
 msgctxt "block keyword"
 msgid "numbering"
 msgstr "numeração"
+
+#: includes/class-locations.php:106
+msgid "Locations"
+msgstr "Localizações"
+
+#: includes/class-locations.php:107
+msgid "Location"
+msgstr "Localização"
+
+#: includes/class-locations.php:175
+msgid "Brazil"
+msgstr "Brasil"
+
+#: includes/class-member.php:66
+msgid "Members"
+msgstr "Membros"
+
+#: includes/class-member.php:67
+msgid "Member"
+msgstr "Membro"
+
+#: includes/class-member.php:68
+msgid "Add New Member"
+msgstr "Adicionar Novo Membro"
+
+#: includes/class-member.php:69
+msgid "Edit Member"
+msgstr "Editar Membro"
+
+#: includes/class-member.php:70
+msgid "View Member"
+msgstr "Ver Membro"
+
+#: includes/class-member.php:71
+msgid "Search Members"
+msgstr "Buscar Membros"
+
+#: includes/class-member.php:72
+msgid "No members found."
+msgstr "Nenhum membro encontrado."
+
+#: includes/class-member.php:73
+msgid "No members found in Trash."
+msgstr "Nenhum membro encontrado na lixeira."
+
+#: includes/class-member.php:74
+msgid "All Members"
+msgstr "Todos os Membros"
+
+#: includes/class-member.php:76
+msgid "A submitted Atelier Axell Club application."
+msgstr "Um cadastro enviado ao Atelier Axell Club."
+
+#. translators: %s: form field name.
+#: includes/class-rest.php:192
+#, php-format
+msgid "Missing required field: %s"
+msgstr "Campo obrigatório ausente: %s"
+
+#: includes/class-rest.php:200
+msgid "Invalid email address."
+msgstr "Endereço de e-mail inválido."
+
+#: includes/class-rest.php:207
+msgid "Invalid state/city."
+msgstr "Estado/cidade inválido."
+
+#: includes/class-rest.php:220
+msgid "Could not save your application."
+msgstr "Não foi possível salvar seu cadastro."
+
+#: includes/blocks/form/form-input/index.js:286
+msgid "Field (name) that populates these options"
+msgstr "Campo (name) que popula estas opções"
+
+#: includes/blocks/form/form-input/index.js:287
+msgid "Leave empty for a static list. If set, this select starts empty/disabled and assets/js/frontend.js fetches its options from the REST cities endpoint whenever that field changes."
+msgstr "Deixe vazio para uma lista estática. Se definido, este select começa vazio/desabilitado e assets/js/frontend.js busca suas opções no endpoint REST de cidades sempre que esse campo mudar."
+
+#: includes/blocks/form/form/block.json
+msgctxt "block description"
+msgid "Self-contained <form> wrapper for the Atelier Axell Club application form. Submits to the plugin's REST endpoint, which creates an aac_member post and resolves its Country/State/City taxonomy term."
+msgstr "Wrapper <form> autocontido para o formulário de adesão do Atelier Axell Club. Envia para o endpoint REST do plugin, que cria um post aac_member e resolve sua taxonomy de País/Estado/Cidade."

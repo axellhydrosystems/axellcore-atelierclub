@@ -35,3 +35,6 @@ require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-plugin.php';
 require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-template-loader.php';
 require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-assets.php';
 require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-blocks.php';
+require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-member.php';
+require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-locations.php';
+require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-rest.php';

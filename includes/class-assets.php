@@ -120,6 +120,15 @@ final class Assets {
 				'in_footer' => true,
 			)
 		);
+
+		// REST root for the cities cascading-select fetch + the real form
+		// submission (see includes/class-rest.php) — both public, unauthenticated
+		// endpoints, so no nonce is localized here.
+		wp_localize_script(
+			'aac-frontend',
+			'aacRest',
+			array( 'root' => esc_url_raw( trailingslashit( rest_url( Rest::NAMESPACE ) ) ) )
+		);
 	}
 
 	/**

@@ -4,7 +4,7 @@
 	"name": "axellcore/form",
 	"title": "Atelier Form",
 	"category": "text",
-	"description": "Self-contained <form> wrapper for the Atelier Axell Club application form. Submission is client-side only at this phase (no backend yet).",
+	"description": "Self-contained <form> wrapper for the Atelier Axell Club application form. Submits to the plugin's REST endpoint, which creates an aac_member post and resolves its Country/State/City taxonomy term.",
 	"keywords": [ "form", "application", "adesão" ],
 	"textdomain": "axellcore-atelierclub",
 	"attributes": {},

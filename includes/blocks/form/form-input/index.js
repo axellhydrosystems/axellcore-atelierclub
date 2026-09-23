@@ -87,6 +87,13 @@
 			if ( attributes.maskSourceName ) {
 				common[ 'data-aac-mask-source' ] = attributes.maskSourceName;
 			}
+			if ( attributes.citiesSourceName ) {
+				common[ 'data-aac-cities-source' ] = attributes.citiesSourceName;
+				// Starts empty (populated by frontend.js once the source
+				// field has a value) — disabled until then, same as the
+				// real page markup this generates.
+				common.disabled = true;
+			}
 		} else {
 			common.disabled = true;
 		}
@@ -272,6 +279,15 @@
 								value: optionsToText( attributes.options ),
 								onChange: function ( v ) {
 									setAttributes( { options: textToOptions( v ) } );
+								},
+							} ),
+						'select' === attributes.type &&
+							el( TextControl, {
+								label: __( 'Field (name) that populates these options', 'axellcore-atelierclub' ),
+								help: __( 'Leave empty for a static list. If set, this select starts empty/disabled and assets/js/frontend.js fetches its options from the REST cities endpoint whenever that field changes.', 'axellcore-atelierclub' ),
+								value: attributes.citiesSourceName,
+								onChange: function ( v ) {
+									setAttributes( { citiesSourceName: v } );
 								},
 							} )
 					),
