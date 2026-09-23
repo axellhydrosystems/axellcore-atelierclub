@@ -87,6 +87,9 @@ final class AssetsTest extends TestCase {
 		Functions\expect( 'wp_enqueue_style' )
 			->with( 'aac-sections', \Mockery::type( 'string' ), array( 'aac-tokens' ), AXELLCORE_ATELIERCLUB_VERSION )
 			->once();
+		Functions\expect( 'wp_enqueue_style' )
+			->with( 'aac-blocks-bridge', \Mockery::type( 'string' ), array( 'aac-sections' ), AXELLCORE_ATELIERCLUB_VERSION )
+			->once();
 		Functions\expect( 'wp_enqueue_script' )
 			->with( 'aac-frontend', \Mockery::type( 'string' ), array(), AXELLCORE_ATELIERCLUB_VERSION, \Mockery::type( 'array' ) )
 			->once();

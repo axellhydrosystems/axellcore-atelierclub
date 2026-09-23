@@ -108,6 +108,7 @@ final class Assets {
 
 		wp_enqueue_style( 'aac-tokens', AXELLCORE_ATELIERCLUB_URL . 'assets/css/tokens.css', array(), AXELLCORE_ATELIERCLUB_VERSION );
 		wp_enqueue_style( 'aac-sections', AXELLCORE_ATELIERCLUB_URL . 'assets/css/sections.css', array( 'aac-tokens' ), AXELLCORE_ATELIERCLUB_VERSION );
+		wp_enqueue_style( 'aac-blocks-bridge', AXELLCORE_ATELIERCLUB_URL . 'assets/css/blocks-bridge.css', array( 'aac-sections' ), AXELLCORE_ATELIERCLUB_VERSION );
 
 		wp_enqueue_script(
 			'aac-frontend',

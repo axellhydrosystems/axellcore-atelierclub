@@ -66,5 +66,6 @@ final class Plugin {
 		Template_Loader::instance()->register_hooks();
 		Assets::instance()->register_hooks();
 		Blocks::instance()->register_hooks();
+		Icons::instance()->register_hooks();
 	}
 }
