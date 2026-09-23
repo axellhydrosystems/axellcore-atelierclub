@@ -105,8 +105,8 @@
 .aac-editorial.wp-block-columns,
 .aac-apply.wp-block-columns { --wp--style--block-gap: 0px; }
 
-/* core/list resets (specs / apply-terms / tier benefit list already have
-   their own bullet replacement via ::before on li — strip the default core
-   list-style so it doesn't double up) */
-.aac-placa-specs.wp-block-list,
-.aac-apply-terms.wp-block-list { list-style: none; padding-left: 0; }
+/* core/list reset — the specs list uses .aac-k/.aac-v key-value spans, no
+   numbering, so it keeps its own bullet suppressed. aac-apply-terms is
+   NOT listed here any more: it's a genuine <ol type="i"> now and wants its
+   native marker (see .aac-apply-terms in sections.css). */
+.aac-placa-specs.wp-block-list { list-style: none; padding-left: 0; }

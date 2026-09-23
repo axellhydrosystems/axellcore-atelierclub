@@ -77,6 +77,31 @@ p.aac-body{
 }
 .aac-on-ivory .aac-chapter-tag{ color: var(--bronze); }
 
+/* ============================================
+   CHAPTERS — axellcore/chapters > axellcore/chapter. The "Capítulo NN"
+   prefix is entirely generated content, never stored text:
+     - the number is a CSS counter — reordering, adding, or removing a
+       chapter in the editor renumbers every chapter automatically.
+     - the word ("Capítulo"/"Chapter") comes from a `data-chapter="…"`
+       attribute, itself resolved at render time via PHP __() (frontend,
+       see Blocks::render_chapter()) or wp.i18n.__() (editor canvas, see
+       chapter/index.js) — real gettext, not a hardcoded string here.
+   Scoped to the chapter block's OWN tag via the direct-child combinator so
+   unrelated .aac-chapter-tag/.aac-eyebrow micro-labels elsewhere in a
+   chapter's body (e.g. "Percurso editorial") aren't numbered.
+   ============================================ */
+.aac-chapters{ counter-reset: aac-chapter; }
+.aac-chapter{ counter-increment: aac-chapter; }
+.aac-chapter > .aac-chapter-tag{
+  display: flex;
+  align-items: center;
+  margin: 0 0 28px;
+}
+.aac-chapter > .aac-chapter-tag::before{
+  content: attr(data-chapter) " " counter(aac-chapter, decimal-leading-zero) " · ";
+  white-space: pre;
+}
+
 /* Editorial dropcap-style number */
 .aac-editorial-num{
   font-family: var(--serif);
@@ -113,7 +138,6 @@ section{ position: relative; }
   align-items: end;
   margin-bottom: 88px;
 }
-.aac-section-head .aac-head-left .aac-eyebrow{ margin-bottom: 28px; display: inline-flex; }
 .aac-section-head .aac-head-right{ padding-bottom: 8px; }
 @media (max-width: 900px){
   .aac-section-head{ grid-template-columns: 1fr; gap: 28px; margin-bottom: 56px; }
@@ -427,7 +451,6 @@ section{ position: relative; }
   align-items: start;
 }
 .aac-manifesto-side{ position: sticky; top: 120px; }
-.aac-manifesto-side .aac-chapter-tag{ margin-bottom: 40px; display: block; }
 .aac-manifesto-side h2{
   font-family: var(--serif);
   font-weight: 300;
@@ -471,15 +494,24 @@ section{ position: relative; }
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--line-dk);
   border-bottom: 1px solid var(--line-dk);
+  list-style: none;
+  padding: 0; margin: 0;
 }
-.aac-pillar{
+.aac-pillars > li{
   padding: 60px 40px 68px;
   border-right: 1px solid var(--line-dk);
   transition: background .4s ease;
 }
-.aac-pillar:last-child{ border-right: none; }
-.aac-pillar:hover{ background: rgba(180,153,106,0.04); }
-.aac-pillar .aac-num{
+.aac-pillars > li:last-child{ border-right: none; }
+.aac-pillars > li:hover{ background: rgba(180,153,106,0.04); }
+/* ::marker is suppressed by all browsers once the <li> is a grid/flex item
+   of its parent (a real, spec'd interop limitation, not a bug here) — so the
+   numbering still comes from the browser's automatic `list-item` counter,
+   just surfaced via ::before's `content: counter(list-item, …)` instead of
+   ::marker, which IS rendered normally in a grid/flex formatting context. */
+.aac-pillars > li::before{
+  content: counter(list-item, lower-roman) ".";
+  display: block;
   font-family: var(--serif);
   font-style: italic;
   font-weight: 300;
@@ -487,9 +519,9 @@ section{ position: relative; }
   line-height: 1;
   color: var(--bronze-2);
   margin-bottom: 40px;
-  display: block;
 }
-.aac-pillar h4{
+.aac-pillars > li strong{
+  display: block;
   font-family: var(--serif);
   font-weight: 400;
   font-size: 26px;
@@ -498,22 +530,22 @@ section{ position: relative; }
   margin: 0 0 14px;
   letter-spacing: -0.01em;
 }
-.aac-pillar p{
+.aac-pillars > li span{
+  display: block;
   font-family: var(--sans);
   font-weight: 300;
   font-size: 14px; line-height: 1.65;
   color: rgba(239,236,228,0.66);
-  margin: 0;
 }
 @media (max-width: 900px){
   .aac-pillars{ grid-template-columns: 1fr 1fr; }
-  .aac-pillar:nth-child(2n){ border-right: none; }
-  .aac-pillar:nth-child(-n+2){ border-bottom: 1px solid var(--line-dk); }
+  .aac-pillars > li:nth-child(2n){ border-right: none; }
+  .aac-pillars > li:nth-child(-n+2){ border-bottom: 1px solid var(--line-dk); }
 }
 @media (max-width: 560px){
   .aac-pillars{ grid-template-columns: 1fr; }
-  .aac-pillar{ border-right: none; border-bottom: 1px solid var(--line-dk); }
-  .aac-pillar:last-child{ border-bottom: none; }
+  .aac-pillars > li{ border-right: none; border-bottom: 1px solid var(--line-dk); }
+  .aac-pillars > li:last-child{ border-bottom: none; }
 }
 
 /* ============================================
@@ -638,14 +670,18 @@ section{ position: relative; }
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
   border-top: 1px solid var(--line-iv);
+  list-style: none;
+  padding: 0; margin: 0;
 }
-.aac-prota{
+.aac-prota-grid > li{
   padding: 56px 40px 60px;
   border-right: 1px solid var(--line-iv);
   border-bottom: 1px solid var(--line-iv);
 }
-.aac-prota:last-child{ border-right: none; }
-.aac-prota .aac-num{
+.aac-prota-grid > li:last-child{ border-right: none; }
+.aac-prota-grid > li::before{
+  content: counter(list-item, lower-roman) ".";
+  display: block;
   font-family: var(--serif);
   font-style: italic;
   font-weight: 300;
@@ -653,9 +689,9 @@ section{ position: relative; }
   line-height: 1;
   color: var(--bronze);
   margin-bottom: 44px;
-  display: block;
 }
-.aac-prota h4{
+.aac-prota-grid > li strong{
+  display: block;
   font-family: var(--serif);
   font-weight: 400;
   font-size: 30px;
@@ -663,16 +699,16 @@ section{ position: relative; }
   color: var(--ink);
   margin: 0 0 16px;
 }
-.aac-prota p{
+.aac-prota-grid > li span{
+  display: block;
   font-family: var(--sans);
   font-weight: 300;
   font-size: 14.5px; line-height: 1.7;
   color: var(--stone-dk);
-  margin: 0;
 }
 @media (max-width: 900px){
   .aac-prota-grid{ grid-template-columns: 1fr; }
-  .aac-prota{ border-right: none; }
+  .aac-prota-grid > li{ border-right: none; }
 }
 
 /* ============================================
@@ -683,40 +719,43 @@ section{ position: relative; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
+  list-style: none;
+  padding: 0; margin: 0;
 }
-.aac-promise{
-  padding: 60px 48px 68px;
+.aac-promises-grid > li{
+  position: relative;
+  padding: 60px 48px 68px 140px;
   border-right: 1px solid var(--line-dk);
   border-bottom: 1px solid var(--line-dk);
-  display: flex;
-  gap: 32px;
 }
-.aac-promise:nth-child(2n){ border-right: none; }
-.aac-promise:nth-child(n+3){ border-bottom: none; }
-.aac-promise .aac-pn{
+.aac-promises-grid > li:nth-child(2n){ border-right: none; }
+.aac-promises-grid > li:nth-child(n+3){ border-bottom: none; }
+.aac-promises-grid > li::before{
+  content: counter(list-item, lower-roman) ".";
+  position: absolute;
+  left: 48px; top: 60px;
   font-family: var(--serif); font-style: italic; font-weight: 300;
   font-size: 44px; line-height: 1;
   color: var(--bronze-2);
-  flex-shrink: 0;
-  min-width: 60px;
 }
-.aac-promise h4{
+.aac-promises-grid > li strong{
+  display: block;
   font-family: var(--serif);
   font-weight: 400;
   font-size: 26px; line-height: 1.2;
   margin: 0 0 12px;
   color: var(--ivory);
 }
-.aac-promise p{
+.aac-promises-grid > li span{
+  display: block;
   font-family: var(--sans); font-weight: 300;
   font-size: 14.5px; line-height: 1.65;
   color: rgba(239,236,228,0.68);
-  margin: 0;
 }
 @media (max-width: 900px){
   .aac-promises-grid{ grid-template-columns: 1fr; }
-  .aac-promise{ border-right: none; border-bottom: 1px solid var(--line-dk); }
-  .aac-promise:last-child{ border-bottom: none; }
+  .aac-promises-grid > li{ border-right: none; border-bottom: 1px solid var(--line-dk); }
+  .aac-promises-grid > li:last-child{ border-bottom: none; }
 }
 
 /* ============================================
@@ -779,6 +818,7 @@ section{ position: relative; }
   grid-template-columns: repeat(4, 1fr);
   gap: 32px;
   position: relative;
+  counter-reset: aac-step;
 }
 .aac-journey-steps::before{
   content:""; position: absolute; left: 0; right: 0; top: 52px;
@@ -786,8 +826,10 @@ section{ position: relative; }
 }
 .aac-jstep{
   padding-top: 40px; position: relative;
+  counter-increment: aac-step;
 }
-.aac-jstep .aac-marker{
+.aac-jstep::before{
+  content: counter(aac-step, decimal-leading-zero);
   width: 24px; height: 24px; border-radius: 50%;
   background: var(--bronze); color: var(--ink);
   display: flex; align-items: center; justify-content: center;
@@ -835,6 +877,7 @@ section{ position: relative; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  counter-reset: aac-tier;
 }
 .aac-tier{
   background: #FBF8F0;
@@ -844,12 +887,14 @@ section{ position: relative; }
   display: flex; flex-direction: column;
   transition: transform .4s ease, box-shadow .4s ease;
   min-height: 100%;
+  counter-increment: aac-tier;
 }
 .aac-tier:hover{
   transform: translateY(-4px);
   box-shadow: 0 30px 60px -30px rgba(11,14,18,0.15);
 }
-.aac-tier .aac-num-roman{
+.aac-tier::before{
+  content: counter(aac-tier, lower-roman) ".";
   font-family: var(--serif);
   font-style: italic;
   font-weight: 300;
@@ -857,6 +902,8 @@ section{ position: relative; }
   color: var(--bronze);
   line-height: 1;
   margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
 }
 .aac-tier .aac-tier-cap{
   font-size: 10.5px; letter-spacing: 0.32em;
@@ -907,7 +954,7 @@ section{ position: relative; }
   background: var(--ink); color: var(--ivory); border-color: var(--ink);
   position: relative;
 }
-.aac-tier.aac-dark .aac-num-roman{ color: var(--bronze-2); }
+.aac-tier.aac-dark::before{ color: var(--bronze-2); }
 .aac-tier.aac-dark .aac-tier-cap{ color: var(--bronze-2); }
 .aac-tier.aac-dark .aac-tier-name{ color: var(--ivory); }
 .aac-tier.aac-dark .aac-tier-italic{ color: var(--bronze-2); }
@@ -936,32 +983,43 @@ section{ position: relative; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line-dk);
+  list-style: none;
+  padding: 0; margin: 0;
 }
-.aac-benefit{
+.aac-benefits-grid > li{
   padding: 48px 36px 52px;
   border-right: 1px solid var(--line-dk);
   border-bottom: 1px solid var(--line-dk);
   transition: background .35s ease;
 }
-.aac-benefit:nth-child(3n){ border-right: none; }
-.aac-benefit:hover{ background: rgba(180,153,106,0.04); }
-.aac-benefit .aac-num{
+.aac-benefits-grid > li:nth-child(3n){ border-right: none; }
+.aac-benefits-grid > li:hover{ background: rgba(180,153,106,0.04); }
+/* ::marker is suppressed once the <li> is a grid/flex item of its parent
+   (all browsers, per spec) — content: counter(list-item, …) on ::before
+   still reads the browser's own auto-incrementing list-item counter, so
+   numbering stays native; only the zero-padded digit format needed CSS,
+   since "01" isn't a valid <ol type> value. */
+.aac-benefits-grid > li::before{
+  content: counter(list-item, decimal-leading-zero);
+  display: block;
   font-family: var(--serif); font-style: italic; font-weight: 300;
   font-size: 32px; color: var(--bronze-2);
-  margin-bottom: 28px; display: block; line-height: 1;
+  line-height: 1;
+  margin-bottom: 28px;
 }
-.aac-benefit h4{
+.aac-benefits-grid > li strong{
+  display: block;
   font-family: var(--serif);
   font-weight: 400;
   font-size: 22px; line-height: 1.2;
   color: var(--ivory);
   margin: 0 0 12px;
 }
-.aac-benefit p{
+.aac-benefits-grid > li span{
+  display: block;
   font-family: var(--sans); font-weight: 300;
   font-size: 14px; line-height: 1.65;
   color: rgba(239,236,228,0.66);
-  margin: 0;
 }
 .aac-benefits-prizes{
   padding: 56px 40px 60px;
@@ -983,12 +1041,12 @@ section{ position: relative; }
 }
 @media (max-width: 900px){
   .aac-benefits-grid{ grid-template-columns: 1fr 1fr; }
-  .aac-benefit{ border-right: 1px solid var(--line-dk); }
-  .aac-benefit:nth-child(2n){ border-right: none; }
+  .aac-benefits-grid > li{ border-right: 1px solid var(--line-dk); }
+  .aac-benefits-grid > li:nth-child(2n){ border-right: none; }
 }
 @media (max-width: 620px){
   .aac-benefits-grid{ grid-template-columns: 1fr; }
-  .aac-benefit{ border-right: none; }
+  .aac-benefits-grid > li{ border-right: none; }
 }
 
 /* ============================================
@@ -1003,22 +1061,18 @@ section{ position: relative; }
 .aac-edit-path{
   border-top: 1px solid var(--line-iv);
   margin-top: 32px;
+  list-style-position: outside;
+  padding: 0 0 0 62px;
 }
-.aac-edit-path .aac-row{
+.aac-edit-path li{
   padding: 20px 0;
   border-bottom: 1px solid var(--line-iv);
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 22px;
-  align-items: baseline;
-}
-.aac-edit-path .aac-n{
-  font-family: var(--serif); font-style: italic; font-weight: 400;
-  font-size: 24px; color: var(--bronze);
-}
-.aac-edit-path .aac-t{
   font-family: var(--serif); font-weight: 400;
   font-size: 20px; color: var(--ink); line-height: 1.35;
+}
+.aac-edit-path li::marker{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 24px; color: var(--bronze);
 }
 .aac-channels{ display: block; }
 .aac-channels .aac-eyebrow{ margin-bottom: 28px; }
@@ -1113,21 +1167,18 @@ section{ position: relative; }
 }
 .aac-apply-side .aac-lede{ margin: 24px 0 40px; }
 .aac-apply-terms{
-  list-style: none; padding: 0; margin: 0;
+  list-style-position: outside;
+  padding: 0 0 0 34px; margin: 0;
   border-top: 1px solid var(--line-dk);
 }
 .aac-apply-terms li{
-  padding: 18px 0;
+  padding: 18px 0 18px 20px;
   border-bottom: 1px solid var(--line-dk);
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  gap: 20px;
   font-size: 14px; color: rgba(239,236,228,0.75);
   line-height: 1.55;
-  align-items: baseline;
   font-weight: 300;
 }
-.aac-apply-terms li .aac-r{
+.aac-apply-terms li::marker{
   font-family: var(--serif); font-style: italic; font-weight: 400;
   color: var(--bronze-2); font-size: 17px;
 }
@@ -1373,7 +1424,7 @@ section{ position: relative; }
   overflow: hidden;
   min-height: 460px;
 }
-.aac-tier.aac-mystery::before{
+.aac-tier.aac-mystery::after{
   content: "";
   position: absolute; inset: 0;
   background:
@@ -1382,7 +1433,7 @@ section{ position: relative; }
   pointer-events: none;
 }
 .aac-tier.aac-mystery > *{ position: relative; z-index: 1; }
-.aac-tier.aac-mystery .aac-num-roman{ color: var(--bronze); opacity: 0.75; }
+.aac-tier.aac-mystery::before{ color: var(--bronze); opacity: 0.75; }
 .aac-tier.aac-mystery .aac-tier-cap{ color: var(--stone); }
 .aac-tier.aac-mystery .aac-tier-name{ color: var(--ink); }
 .aac-tier.aac-mystery .aac-tier-italic{
@@ -1491,22 +1542,26 @@ section{ position: relative; }
   display: grid;
   gap: 14px;
   margin-top: 4px;
+  list-style: none;
+  padding-left: 30px;
 }
 .aac-partner-slot{
-  display: grid;
-  grid-template-columns: 30px 1fr;
-  gap: 16px;
-  align-items: center;
+  position: relative;
   padding: 8px 0;
   border-bottom: 1px solid rgba(239,236,228,0.14);
 }
-.aac-partner-slot .aac-idx{
+/* ::marker is suppressed once the <li> is a grid item of its parent (all
+   browsers, per spec) — content: counter(list-item, …) on ::before still
+   reads the browser's own auto-incrementing list-item counter. */
+.aac-partner-slot::before{
+  content: counter(list-item, lower-roman) ".";
+  position: absolute;
+  left: -30px;
   font-family: var(--serif);
   font-style: italic;
   font-weight: 400;
   font-size: 18px;
   color: var(--bronze-2);
-  text-align: center;
 }
 .aac-partner-slot input{
   background: transparent;
@@ -1523,5 +1578,19 @@ section{ position: relative; }
 .aac-partner-slot input:focus{ color: var(--bronze-3); }
 
 /* Reveal on scroll */
-.aac-reveal{ opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
-.aac-reveal.aac-in{ opacity: 1; transform: translateY(0); }
+/* core/list-item can't carry a className (block.json sets "className":
+   false), so the 4 card grids that became real <ol>/<li> lists (Pillars,
+   Protagonists, Promises, Benefits) can't tag each <li> with .aac-reveal —
+   the stagger-in-on-scroll from the approved mockup is preserved via these
+   structural child selectors instead (frontend.js's IntersectionObserver
+   selects the same list). */
+.aac-reveal,
+.aac-pillars > li,
+.aac-prota-grid > li,
+.aac-promises-grid > li,
+.aac-benefits-grid > li{ opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+.aac-reveal.aac-in,
+.aac-pillars > li.aac-in,
+.aac-prota-grid > li.aac-in,
+.aac-promises-grid > li.aac-in,
+.aac-benefits-grid > li.aac-in{ opacity: 1; transform: translateY(0); }

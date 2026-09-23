@@ -26,8 +26,13 @@
 	/* ---------------------------------------------------------------------
 	 * Reveal on scroll — any element already carrying .aac-reveal (set via
 	 * the block's "Additional CSS class(es)" field at content-authoring
-	 * time) gets .aac-in the first time it enters the viewport.
+	 * time) gets .aac-in the first time it enters the viewport. The 4 card
+	 * grids built as real <ol>/<li> lists (core/list-item can't carry a
+	 * className) are selected structurally instead, so each card still
+	 * stagger-reveals individually like the approved mockup.
 	 * ------------------------------------------------------------------- */
+	var REVEAL_SELECTOR =
+		'.aac-reveal, .aac-pillars > li, .aac-prota-grid > li, .aac-promises-grid > li, .aac-benefits-grid > li';
 	if ( 'IntersectionObserver' in window ) {
 		var io = new IntersectionObserver(
 			function ( entries ) {
@@ -40,11 +45,11 @@
 			},
 			{ threshold: 0.1 }
 		);
-		document.querySelectorAll( '.aac-reveal' ).forEach( function ( el ) {
+		document.querySelectorAll( REVEAL_SELECTOR ).forEach( function ( el ) {
 			io.observe( el );
 		} );
 	} else {
-		document.querySelectorAll( '.aac-reveal' ).forEach( function ( el ) {
+		document.querySelectorAll( REVEAL_SELECTOR ).forEach( function ( el ) {
 			el.classList.add( 'aac-in' );
 		} );
 	}
