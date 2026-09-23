@@ -330,7 +330,13 @@ class Axellcore_Atelierclub_CLI_Command extends WP_CLI_Command {
 			WP_CLI::error( "No changes added in current changelog for {$version}.\n       Edit readme.txt and replace the placeholder before releasing." );
 		}
 
-		// ── Regenerate POT + JS translation catalogs ─────────────────────────────────
+		// ── Regenerate POT + PO + compiled MO + JS translation catalogs ──────────────
+		// Order matters: make-pot (extract source strings) → update-po (merge into
+		// every shipped .po, preserving existing translations) → make-mo (compile —
+		// PHP gettext via load_plugin_textdomain() reads ONLY the compiled .mo, never
+		// the .po directly; skipping this step means every "translated" string
+		// silently stays in English at runtime, which is exactly what happened from
+		// 0.1.0 through 0.1.2) → make-json (JS/editor catalogs, from the current .po).
 
 		WP_CLI::log( '  → generating axellcore-atelierclub.pot via wp i18n make-pot' );
 		axellcore_atelierclub_run(
@@ -340,9 +346,25 @@ class Axellcore_Atelierclub_CLI_Command extends WP_CLI_Command {
 			true
 		);
 
+		foreach ( glob( $plugin_dir . '/languages/*.po' ) as $po_file ) {
+			WP_CLI::log( "  → merging new strings into " . basename( $po_file ) . ' via wp i18n update-po' );
+			axellcore_atelierclub_run(
+				'wp i18n update-po ' . escapeshellarg( $pot_file ) . ' ' . escapeshellarg( $po_file ) . ' --quiet',
+				$plugin_dir,
+				true
+			);
+		}
+
+		WP_CLI::log( '  → compiling .mo files via wp i18n make-mo' );
+		axellcore_atelierclub_run(
+			'wp i18n make-mo ' . escapeshellarg( $plugin_dir . '/languages' ) . ' ' . escapeshellarg( $plugin_dir . '/languages' ),
+			$plugin_dir,
+			true
+		);
+
 		WP_CLI::log( '  → generating JS translation catalog via wp i18n make-json' );
 		axellcore_atelierclub_try_run(
-			'wp i18n make-json ' . escapeshellarg( $pot_file ) . ' ' . escapeshellarg( $plugin_dir . '/languages' ) . ' --no-purge --quiet',
+			'wp i18n make-json ' . escapeshellarg( $plugin_dir . '/languages' ) . ' --no-purge --quiet',
 			$plugin_dir
 		);
 

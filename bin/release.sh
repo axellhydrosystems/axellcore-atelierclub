@@ -191,7 +191,14 @@ if [[ "$CHANGELOG_ENTRY" == "${PLACEHOLDER}"* && $(echo "$CHANGELOG_ENTRY" | wc 
 	die "No changes added in current changelog for ${NEW_VERSION}.\n       Edit readme.txt and replace the placeholder before releasing."
 fi
 
-# ── Update POT + JS translation catalog ───────────────────────────────────────
+# ── Update POT + PO + compiled MO + JS translation catalog ────────────────────
+# The four steps below MUST run in this order: make-pot (extract source
+# strings) → update-po (merge into every shipped .po, preserving existing
+# translations) → make-mo (compile — PHP gettext via load_plugin_textdomain()
+# reads ONLY the compiled .mo, never the .po directly; skipping this step
+# means every "translated" string silently stays in English at runtime, which
+# is exactly what happened from 0.1.0 through 0.1.2) → make-json (JS/editor
+# translation catalogs, generated from the now-current .po).
 
 info "generating axellcore-atelierclub.pot via wp i18n make-pot"
 wp i18n make-pot "$PLUGIN_DIR" "$POT_FILE" \
@@ -199,8 +206,17 @@ wp i18n make-pot "$PLUGIN_DIR" "$POT_FILE" \
 	--exclude=vendor,node_modules,tests \
 	--quiet
 
+for po_file in "$PLUGIN_DIR"/languages/*.po; do
+	[ -e "$po_file" ] || continue
+	info "merging new strings into $(basename "$po_file") via wp i18n update-po"
+	wp i18n update-po "$POT_FILE" "$po_file" --quiet
+done
+
+info "compiling .mo files via wp i18n make-mo"
+wp i18n make-mo "$PLUGIN_DIR/languages" "$PLUGIN_DIR/languages"
+
 info "generating JS translation catalog via wp i18n make-json"
-wp i18n make-json "$POT_FILE" "$PLUGIN_DIR/languages" --no-purge --quiet 2>/dev/null || true
+wp i18n make-json "$PLUGIN_DIR/languages" --no-purge --quiet 2>/dev/null || true
 
 # ── Commit, tag, push ────────────────────────────────────────────────────────
 

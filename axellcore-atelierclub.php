@@ -10,6 +10,7 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       axellcore-atelierclub
+ * Domain Path:       /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,6 +21,21 @@ define( 'AXELLCORE_ATELIERCLUB_VERSION', '0.1.2' );
 define( 'AXELLCORE_ATELIERCLUB_FILE', __FILE__ );
 define( 'AXELLCORE_ATELIERCLUB_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AXELLCORE_ATELIERCLUB_URL', plugin_dir_url( __FILE__ ) );
+
+// WordPress only auto-loads translations for plugins fetched from
+// wordpress.org's own translation API — a plugin distributed any other way
+// (like this one) must load its own .mo explicitly, or every __()/_e() call
+// silently stays in the source (English) string regardless of site locale
+// or how complete the .po/.mo actually is. Hooked directly here (not on
+// plugins_loaded/init) so it's guaranteed to run before anything in
+// includes/ — which registers on `init` — ever calls __().
+add_action(
+	'plugins_loaded',
+	function () {
+		load_plugin_textdomain( 'axellcore-atelierclub', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	},
+	1
+);
 
 require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-plugin.php';
 require_once AXELLCORE_ATELIERCLUB_PATH . 'includes/class-template-loader.php';

@@ -1,5 +1,3 @@
-# Copyright (C) 2026 Axell
-# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
 "Project-Id-Version: Axellcore — Atelier Club 0.1.0\n"
@@ -11,9 +9,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-09-22T21:04:14+00:00\n"
 "PO-Revision-Date: 2026-09-22 21:30+0000\n"
+"Language: pt_BR\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axellcore-atelierclub\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Plugin Name of the plugin
@@ -36,11 +34,11 @@ msgstr "Landing page autocontida (template FSE + blocos nativos + um bloco custo
 msgid "Axell"
 msgstr "Axell"
 
-#: includes/class-template-loader.php:73
+#: includes/class-template-loader.php:74
 msgid "Atelier — Blank Canvas"
 msgstr "Atelier — Página em Branco"
 
-#: includes/class-template-loader.php:74
+#: includes/class-template-loader.php:75
 msgid "Self-contained canvas for the Atelier Axell Club landing page. No header/footer template parts — the page content renders alone."
 msgstr "Tela autocontida para a landing page do Atelier Axell Club. Sem partes de template de cabeçalho/rodapé — o conteúdo da página é renderizado sozinho."
 
@@ -215,3 +213,78 @@ msgctxt "block keyword"
 msgid "adesão"
 msgstr "adesão"
 
+#: includes/class-activator.php:47
+msgid "Atelier — Header"
+msgstr "Atelier — Cabeçalho"
+
+#: includes/class-activator.php:54
+msgid "Atelier — Footer"
+msgstr "Atelier — Rodapé"
+
+#: includes/class-activator.php:74
+#: includes/class-activator.php:190
+#: includes/class-icons.php:73
+msgid "Atelier Axell Club"
+msgstr "Atelier Axell Club"
+
+#: includes/class-activator.php:193
+msgid "This page is provisioned by the axellcore-atelierclub plugin. Replace this placeholder with the full landing-page sections in the block editor."
+msgstr "Esta página é provisionada pelo plugin axellcore-atelierclub. Substitua este espaço reservado pelas seções completas da landing page no editor de blocos."
+
+#: includes/class-blocks.php:99
+#: includes/blocks/chapters/chapter/index.js:69
+msgid "Chapter"
+msgstr "Capítulo"
+
+#: includes/class-icons.php:74
+msgid "Icons used by the Atelier Axell Club landing page."
+msgstr "Ícones usados pela landing page do Atelier Axell Club."
+
+#: includes/class-icons.php:90
+msgid "Lock"
+msgstr "Cadeado"
+
+#: includes/class-icons.php:98
+msgid "Clock"
+msgstr "Relógio"
+
+#: includes/blocks/chapters/chapter/index.js:78
+msgid "Chapter name…"
+msgstr "Nome do capítulo…"
+
+#: includes/blocks/chapters/chapter/block.json
+msgctxt "block title"
+msgid "Atelier Chapter"
+msgstr "Atelier — Capítulo"
+
+#: includes/blocks/chapters/chapter/block.json
+msgctxt "block description"
+msgid "One numbered chapter. The 'Capítulo NN' prefix is generated automatically (CSS counter, not stored text) — reordering chapters in the editor renumbers them without editing any content. Only the label after the number, and the chapter's own content, are stored."
+msgstr "Um capítulo numerado. O prefixo \"Capítulo NN\" é gerado automaticamente (contador CSS, não é texto armazenado) — reordenar capítulos no editor os renumera sem editar nenhum conteúdo. Apenas o rótulo após o número, e o conteúdo do próprio capítulo, são armazenados."
+
+#: includes/blocks/chapters/chapter/block.json
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block keyword"
+msgid "chapter"
+msgstr "chapter"
+
+#: includes/blocks/chapters/chapter/block.json
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block keyword"
+msgid "capítulo"
+msgstr "capítulo"
+
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block title"
+msgid "Atelier Chapters"
+msgstr "Atelier — Capítulos"
+
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block description"
+msgid "Groups the page's numbered chapters (axellcore/chapter) and establishes the auto-numbering scope — reordering, adding, or removing a chapter renumbers the rest automatically (CSS counter, not stored text)."
+msgstr "Agrupa os capítulos numerados da página (axellcore/chapter) e estabelece o escopo de numeração automática — reordenar, adicionar ou remover um capítulo renumera os demais automaticamente (contador CSS, não é texto armazenado)."
+
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block keyword"
+msgid "numbering"
+msgstr "numeração"

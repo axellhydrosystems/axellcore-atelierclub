@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T00:33:24+00:00\n"
+"POT-Creation-Date: 2026-09-23T01:31:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axellcore-atelierclub\n"
@@ -34,25 +34,38 @@ msgstr ""
 msgid "Axell"
 msgstr ""
 
-#: includes/class-activator.php:48
-#: includes/class-activator.php:89
+#: includes/class-activator.php:47
+msgid "Atelier — Header"
+msgstr ""
+
+#: includes/class-activator.php:54
+msgid "Atelier — Footer"
+msgstr ""
+
+#: includes/class-activator.php:74
+#: includes/class-activator.php:190
 #: includes/class-icons.php:73
 msgid "Atelier Axell Club"
 msgstr ""
 
-#: includes/class-activator.php:92
+#: includes/class-activator.php:193
 msgid "This page is provisioned by the axellcore-atelierclub plugin. Replace this placeholder with the full landing-page sections in the block editor."
+msgstr ""
+
+#: includes/class-blocks.php:99
+#: includes/blocks/chapters/chapter/index.js:69
+msgid "Chapter"
 msgstr ""
 
 #: includes/class-icons.php:74
 msgid "Icons used by the Atelier Axell Club landing page."
 msgstr ""
 
-#: includes/class-icons.php:81
+#: includes/class-icons.php:90
 msgid "Lock"
 msgstr ""
 
-#: includes/class-icons.php:89
+#: includes/class-icons.php:98
 msgid "Clock"
 msgstr ""
 
@@ -62,6 +75,10 @@ msgstr ""
 
 #: includes/class-template-loader.php:75
 msgid "Self-contained canvas for the Atelier Axell Club landing page. No header/footer template parts — the page content renders alone."
+msgstr ""
+
+#: includes/blocks/chapters/chapter/index.js:78
+msgid "Chapter name…"
 msgstr ""
 
 #: includes/blocks/form/form-input/index.js:25
@@ -187,6 +204,43 @@ msgstr ""
 
 #: includes/blocks/form/form-input/index.js:292
 msgid "Name of the select field whose value (\"cpf\"/\"cnpj\") drives this mask."
+msgstr ""
+
+#: includes/blocks/chapters/chapter/block.json
+msgctxt "block title"
+msgid "Atelier Chapter"
+msgstr ""
+
+#: includes/blocks/chapters/chapter/block.json
+msgctxt "block description"
+msgid "One numbered chapter. The 'Capítulo NN' prefix is generated automatically (CSS counter, not stored text) — reordering chapters in the editor renumbers them without editing any content. Only the label after the number, and the chapter's own content, are stored."
+msgstr ""
+
+#: includes/blocks/chapters/chapter/block.json
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block keyword"
+msgid "chapter"
+msgstr ""
+
+#: includes/blocks/chapters/chapter/block.json
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block keyword"
+msgid "capítulo"
+msgstr ""
+
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block title"
+msgid "Atelier Chapters"
+msgstr ""
+
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block description"
+msgid "Groups the page's numbered chapters (axellcore/chapter) and establishes the auto-numbering scope — reordering, adding, or removing a chapter renumbers the rest automatically (CSS counter, not stored text)."
+msgstr ""
+
+#: includes/blocks/chapters/chapters/block.json
+msgctxt "block keyword"
+msgid "numbering"
 msgstr ""
 
 #: includes/blocks/form/form-input/block.json
