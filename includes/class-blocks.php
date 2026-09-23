@@ -1,9 +1,11 @@
 <?php
 /**
- * Registers the plugin's two custom blocks (axellcore/form, axellcore/form-input)
- * and a handful of core Button style variations used for the repeated CTA/
- * chip affordances — keeping everything else as plain core blocks per the
- * "minimize custom blocks" direction.
+ * Registers the plugin's custom blocks — axellcore/form + axellcore/form-input
+ * (the application form) and axellcore/chapters + axellcore/chapter (the
+ * page's auto-numbered "Capítulo NN" sections) — and a handful of core
+ * Button style variations used for the repeated CTA/chip affordances,
+ * keeping everything else as plain core blocks per the "minimize custom
+ * blocks" direction.
  *
  * @package Axellcore_Atelierclub
  */
@@ -63,5 +65,40 @@ final class Blocks {
 	public function register_blocks() {
 		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/form/form' );
 		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/form/form-input' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/chapters/chapters' );
+		register_block_type_from_metadata(
+			AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/chapters/chapter',
+			array( 'render_callback' => array( $this, 'render_chapter' ) )
+		);
+	}
+
+	/**
+	 * Injects a `data-chapter="…"` attribute (the translated word "Chapter"/
+	 * "Capítulo") into the already-rendered static markup for one
+	 * axellcore/chapter block.
+	 *
+	 * Deliberately NOT baked into stored post_content: the block itself
+	 * stays a static block (its JS save() renders the InnerBlocks content
+	 * and the numeral-less tag markup verbatim, so the editor's invalid-
+	 * block recompute check still passes) — this render_callback only
+	 * post-processes that already-correct HTML to add one translated
+	 * attribute, resolved fresh on every request against the site's current
+	 * locale via __(), same as any other gettext string. sections.css then
+	 * reads it back with `content: attr(data-chapter) …` so the visible
+	 * chapter number ("Capítulo 02 · Manifesto") is entirely generated
+	 * content — never frozen text — in both language and number.
+	 *
+	 * @param array  $attributes Block attributes (unused — the word doesn't
+	 *                           depend on them).
+	 * @param string $content    The block's already-rendered save() output.
+	 * @return string
+	 */
+	public function render_chapter( $attributes, $content ) {
+		$processor = new \WP_HTML_Tag_Processor( $content );
+		if ( $processor->next_tag( array( 'class_name' => 'aac-chapter-tag' ) ) ) {
+			$processor->set_attribute( 'data-chapter', __( 'Chapter', 'axellcore-atelierclub' ) );
+			return $processor->get_updated_html();
+		}
+		return $content;
 	}
 }
