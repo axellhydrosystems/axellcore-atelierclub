@@ -4,7 +4,7 @@ Tags: axell, atelier, landing-page, blocks
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,10 @@ Self-contained landing page (FSE template + core blocks + a custom application-f
 Ships the Atelier Axell Club landing page as a plugin-owned FSE template (registered via `register_block_template()`, editable in the Site Editor, no theme header/footer) plus two small custom blocks (`axellcore/form`, `axellcore/form-input`) for the application form — every other section is composed from core WordPress blocks styled with the plugin's own `aac-`-prefixed stylesheet. On activation, the plugin provisions the `/atelier-club` page automatically if it doesn't already exist.
 
 == Changelog ==
+
+= 0.1.2 =
+* Fix: the consent-checkbox field (`axellcore/form-input`, "Li e concordo…") failed block validation in the editor ("Expected tag name `div`, instead saw `label`"). Root cause: its `label` attribute was redundantly duplicated into the block comment's JSON *and* the stored HTML — for this one field the label contains an embedded `<a href=\"#\">` with escaped quotes, which PHP's block-comment parser can't handle, silently returning `attrs = null` for the whole block (confirmed via `parse_blocks()` against the real stored content). `label` is `source:"rich-text"`, so WordPress already derives it from the HTML — it was never meant to be duplicated into the JSON attrs. No other field's label happened to contain embedded HTML, which is why only this one broke.
+* Fix: opening the block editor for the `/atelier-club` page logged `wp_get_post_content_block_attributes()` PHP warnings ("Undefined array key 0", "Attempt to read property content on null") and `parse_blocks(null)` deprecation notices. Root cause: WordPress core's `get_block_templates()` returns results keyed by `plugin//slug` (a string) instead of sequentially when only a plugin-registered template matches (no theme file, no saved override) — a real core edge case, not something fixable by editing core. Worked around with a `get_block_templates` filter that restores sequential array keys for every caller.
 
 = 0.1.1 =
 * Replaced almost all Custom HTML blocks in the seeded content with real core-block composition (Group/Columns/Paragraph/Heading/List/Buttons) — nav, hero, "A Placa" visual, tier lock-marks, benefit prize chips, editorial rows/cards, CTA strip, and the footer are now genuinely WYSIWYG-editable, verified live in the block editor (no "invalid block" warnings). Only 4 tiny, structurally-justified Custom HTML blocks remain (3 purely-decorative empty layers, plus the 5 partner-store inputs).

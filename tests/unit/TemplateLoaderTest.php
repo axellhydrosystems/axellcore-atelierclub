@@ -57,4 +57,26 @@ final class TemplateLoaderTest extends TestCase {
 
 		$this->addToAssertionCount( 1 );
 	}
+
+	/**
+	 * Regression test for a real WP-core bug reproduced on this install:
+	 * WP_Block_Templates_Registry::get_by_query() returns matches keyed by
+	 * `plugin//slug` (string keys), and array_merge() preserves those —
+	 * so get_block_templates() can come back as `['plugin//slug' => ...]`
+	 * instead of `[0 => ...]` when only a plugin-registered template
+	 * matches. Core's wp_get_post_content_block_attributes() then does
+	 * `$current_template[0]->content` unconditionally and throws warnings.
+	 */
+	public function test_reindex_block_templates_restores_sequential_keys(): void {
+		$template                                     = (object) array( 'slug' => 'atelier-club' );
+		$keyed_by_plugin_slug                         = array( 'axellcore-atelierclub//atelier-club' => $template );
+		$result                                        = Template_Loader::instance()->reindex_block_templates( $keyed_by_plugin_slug );
+
+		$this->assertSame( array( $template ), $result );
+		$this->assertArrayHasKey( 0, $result );
+	}
+
+	public function test_reindex_block_templates_passes_through_non_arrays_unchanged(): void {
+		$this->assertNull( Template_Loader::instance()->reindex_block_templates( null ) );
+	}
 }

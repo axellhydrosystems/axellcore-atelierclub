@@ -51,6 +51,7 @@ final class Template_Loader {
 	 */
 	public function register_hooks() {
 		add_action( 'init', array( $this, 'register_template' ) );
+		add_filter( 'get_block_templates', array( $this, 'reindex_block_templates' ) );
 	}
 
 	/**
@@ -76,5 +77,37 @@ final class Template_Loader {
 				'post_types'  => array( 'page' ),
 			)
 		);
+	}
+
+	/**
+	 * Work around a WordPress core bug: when a `get_block_templates()` query
+	 * matches ONLY a plugin-registered template (no theme file, no saved
+	 * `wp_template`/`wp_template_part` post), the result comes back keyed by
+	 * the template's `plugin//slug` string — e.g.
+	 * `['axellcore-atelierclub//atelier-club' => WP_Block_Template]` — instead
+	 * of the sequential `[0 => WP_Block_Template]` every other code path in
+	 * core assumes.
+	 *
+	 * Root cause (confirmed by reading wp-includes/block-template-utils.php):
+	 * `WP_Block_Templates_Registry::get_by_query()` returns its matches keyed
+	 * by template name (`$matching_templates[$template_name] = $template`),
+	 * and `array_merge()` — used to fold those into the query's result array
+	 * — preserves *string* keys (only renumbers integer ones). Core's own
+	 * `wp_get_post_content_block_attributes()` (wp-includes/block-editor.php)
+	 * then does `$current_template[0]->content` unconditionally, which
+	 * emits "Undefined array key 0" / "Attempt to read property content on
+	 * null" warnings, cascading into `parse_blocks(null)` deprecation
+	 * notices — reproduced on this install when opening the block editor for
+	 * a page assigned to our plugin-only template.
+	 *
+	 * `array_values()` here restores the sequential-keys invariant for every
+	 * `get_block_templates()` caller, not just the one that crashes on it —
+	 * a normal, publicly-documented WordPress filter, not a core patch.
+	 *
+	 * @param \WP_Block_Template[] $templates Query result.
+	 * @return \WP_Block_Template[] Re-indexed result.
+	 */
+	public function reindex_block_templates( $templates ) {
+		return is_array( $templates ) ? array_values( $templates ) : $templates;
 	}
 }
