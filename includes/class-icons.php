@@ -75,11 +75,20 @@ final class Icons {
 			)
 		);
 
+		// Solid fill/path icons, not stroke outlines: WordPress core's own
+		// `.wp-block-icon svg { fill: currentColor; }` rule (wp-includes/
+		// blocks/icon/style.css) unconditionally overrides any `fill="none"`
+		// on the source SVG — a CSS property always wins over an SVG
+		// presentation attribute — so a stroke-only icon renders as a solid
+		// filled shape instead of an outline. Every icon in core's own
+		// library is fill/path-based for the same reason; matching that
+		// shape (single filled path, no stroke) is the correct fix, not an
+		// override of core CSS.
 		wp_register_icon(
 			self::COLLECTION . '/lock',
 			array(
 				'label'   => __( 'Lock', 'axellcore-atelierclub' ),
-				'content' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="6" width="8" height="6" rx="0.5"/><path d="M4.5 6 V4 a2.5 2.5 0 0 1 5 0 V6"/></svg>',
+				'content' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14" fill="currentColor"><path d="M7 1.5a2.5 2.5 0 0 0-2.5 2.5v1.75h-.75A.75.75 0 0 0 3 6.5v5.25c0 .414.336.75.75.75h6.5a.75.75 0 0 0 .75-.75V6.5a.75.75 0 0 0-.75-.75H9.5V4A2.5 2.5 0 0 0 7 1.5Zm1.25 4.25h-2.5V4a1.25 1.25 0 1 1 2.5 0v1.75Z"/></svg>',
 			)
 		);
 
@@ -87,7 +96,7 @@ final class Icons {
 			self::COLLECTION . '/clock',
 			array(
 				'label'   => __( 'Clock', 'axellcore-atelierclub' ),
-				'content' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 4 v3 l2 1.5"/></svg>',
+				'content' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14" fill="currentColor"><path d="M7 1.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Zm0 1.5a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm-.75 1a.75.75 0 0 0-.75.75v2.5c0 .199.079.39.22.53l1.5 1.5a.75.75 0 0 0 1.06-1.06L7.25 6.69V4.75A.75.75 0 0 0 6.5 4h-.25Z"/></svg>',
 			)
 		);
 	}
