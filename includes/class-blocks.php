@@ -1,11 +1,14 @@
 <?php
 /**
- * Registers the plugin's custom blocks — axellcore/form + axellcore/form-input
- * (the application form) and axellcore/chapters + axellcore/chapter (the
- * page's auto-numbered "Capítulo NN" sections) — and a handful of core
- * Button style variations used for the repeated CTA/chip affordances,
- * keeping everything else as plain core blocks per the "minimize custom
- * blocks" direction.
+ * Registers the plugin's custom blocks — the application form
+ * (axell/form, axell/form-fieldset, axell/form-label, axell/form-control,
+ * axell/form-submission-notification, plus axellcore/form-input kept
+ * registered-but-hidden for backward compatibility — see this plugin's
+ * CLAUDE.md) and axellcore/chapters + axellcore/chapter (the page's
+ * auto-numbered "Capítulo NN" sections) — and a handful of core Button
+ * style variations used for the repeated CTA/chip affordances, keeping
+ * everything else as plain core blocks per the "minimize custom blocks"
+ * direction.
  *
  * @package Axellcore_Atelierclub
  */
@@ -63,11 +66,15 @@ final class Blocks {
 	 * selectors.
 	 */
 	public function register_blocks() {
-		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/form/form' );
-		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/form/form-input' );
-		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/chapters/chapters' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/form/form' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/form/form-input' ); // Deprecated, see its own header comment.
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/form/form-label' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/form/form-control' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/form/form-fieldset' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/form/form-submission-notification' );
+		register_block_type_from_metadata( AXELLCORE_ATELIERCLUB_PATH . 'build/chapters/chapters' );
 		register_block_type_from_metadata(
-			AXELLCORE_ATELIERCLUB_PATH . 'includes/blocks/chapters/chapter',
+			AXELLCORE_ATELIERCLUB_PATH . 'build/chapters/chapter',
 			array( 'render_callback' => array( $this, 'render_chapter' ) )
 		);
 	}

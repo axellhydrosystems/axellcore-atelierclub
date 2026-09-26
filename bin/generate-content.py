@@ -605,75 +605,74 @@ def footer_section():
     group('aac-footer', inner)
 
 # ============================================================
-# APPLY FORM (axellcore/form + axellcore/form-input)
+# APPLY FORM (axell/form, axell/form-fieldset, axell/form-label,
+# axell/form-control, axell/form-submission-notification)
 # ============================================================
-def _field_control_html(type_, name, required, placeholder, mask, mask_source, options, checked, value, cities_source=""):
-    """Python port of form-input/index.js's FieldControl(attrs, isSave=true) —
-    must match exactly, since this block is static (no PHP render): whatever
-    HTML we embed here IS what the frontend outputs, verbatim."""
-    common = f' name="{name}"'
+# axellcore/form-input (the old fused block) is deprecated — kept
+# registered for backward compatibility (includes/blocks/form/form-input/
+# block.json's "inserter":false) but no longer used to generate content.
+# See this plugin's CLAUDE.md for the full split rationale and the real
+# technical constraint found while researching an automatic migration path
+# (Gutenberg's deprecated/migrate API can't turn one block into sibling
+# blocks of a different name — confirmed against core/gallery's own
+# deprecated.js). Every HTML shape below was captured byte-for-byte from
+# the real blocks via `wp.blocks.getSaveContent()` in the browser (same
+# verification discipline as the rest of this generator), not hand-derived.
+
+def _control_html(type_, id_, name, required, placeholder, mask, mask_source, options, checked, value, cities_source=""):
+    """Python port of form-control/index.js's ControlElement(attrs, isSave=true).
+    `common` mirrors the JS's own `common` object exactly — id/name/required/
+    aria-required/placeholder/mask/mask-source/cities-source+disabled are all
+    merged in unconditionally of type (mirroring the JS building one shared
+    `common` object before branching on type), then each branch only adds
+    the tag itself and, for input-like types, a trailing `type="…"`."""
+    if type_ == 'hidden':
+        return f'<input type="hidden" name="{name}" value="{value}"/>'
+
+    common = f' class="wp-block-axell-form-control" id="{id_}" name="{name}"'
     if required:
-        common += ' required=""'
+        common += ' required aria-required="true"'
     if placeholder:
         common += f' placeholder="{placeholder}"'
+    if mask:
+        common += f' data-aac-mask="{mask}"'
+    if mask_source:
+        common += f' data-aac-mask-source="{mask_source}"'
+    if cities_source:
+        # Starts empty (frontend.js populates it once the source field has
+        # a value) — disabled until then.
+        common += f' data-aac-cities-source="{cities_source}" disabled'
 
     if type_ == 'textarea':
-        extra = f' data-aac-mask="{mask}"' if mask else ''
-        extra += f' data-aac-mask-source="{mask_source}"' if mask_source else ''
-        return f'<textarea{common}{extra}></textarea>'
+        return f'<textarea{common}></textarea>'
 
     if type_ == 'select':
         opts = f'<option value="">{placeholder or "Select an option"}</option>'
         for o in (options or []):
             opts += f'<option value="{o["value"]}">{o["label"]}</option>'
-        select_extra = ''
-        if cities_source:
-            # Starts empty (frontend.js populates it once the source field
-            # has a value) — disabled until then.
-            select_extra = f' data-aac-cities-source="{cities_source}" disabled=""'
-        return f'<select{common}{select_extra}>{opts}</select>'
+        return f'<select{common}>{opts}</select>'
 
     if type_ == 'checkbox':
-        chk = ' checked=""' if checked else ''
-        return f'<input type="checkbox"{common}{chk}>'
+        chk = ' checked' if checked else ''
+        return f'<input{common}{chk} type="checkbox"/>'
 
-    if type_ == 'hidden':
-        return f'<input type="hidden" name="{name}" value="{value}">'
+    return f'<input{common} type="{type_}"/>'
 
-    extra = f' data-aac-mask="{mask}"' if mask else ''
-    extra += f' data-aac-mask-source="{mask_source}"' if mask_source else ''
-    return f'<input type="{type_}"{common}{extra}>'
-
-def _field_wrapper_html(type_, variant, required, hint, label_html, field_html):
-    """Python port of form-input/index.js's FieldWrapper() — see note above."""
-    base_class = 'wp-block-axellcore-form-input'
-    label_span = f'<span class="aac-field-label-text">{label_html}</span>'
-    if type_ == 'hidden':
-        return field_html
-    if variant == 'consent':
-        return f'<label class="aac-consent {base_class}">{field_html}{label_span}</label>'
-    req_span = '<span class="aac-req"> *</span>' if required else ''
-    hint_div = f'<div class="aac-hint">{hint}</div>' if hint else ''
-    return f'<div class="aac-field {base_class}"><label>{label_span}{req_span}</label>{field_html}{hint_div}</div>'
-
-def form_input(type_, name, label, required=False, placeholder="", hint="", options=None, mask="", mask_source="", variant="field", value="", checked=False, cities_source=""):
-    # `label` is intentionally NOT included in the comment JSON: block.json
-    # declares it `source:"rich-text", selector:".aac-field-label-text"`,
-    # meaning WordPress derives its value from the stored HTML itself, not
-    # from the attrs blob — duplicating it here is redundant, and for labels
-    # containing embedded HTML with escaped quotes (e.g. the consent
-    # checkbox's <a href=\"#\">) PHP's block-comment parser chokes on the
-    # escaped quotes and silently returns attrs=null for the whole block
-    # (confirmed via `parse_blocks()` on the real stored content — every
-    # OTHER field's label is plain text with no quotes, and only this one
-    # failed). Keeping `label` out of the JSON entirely sidesteps the bug.
-    attrs = {"type": type_, "name": name}
+def form_control(type_, id_, name="", required=False, placeholder="", mask="", mask_source="", options=None, checked=False, value="", cities_source=""):
+    """axell/form-control — the actual input/select/textarea. `name` falls
+    back to `id_` (already unique across the whole form)."""
+    name = name or id_
+    attrs = {"type": type_, "id": id_}
+    if name != id_:
+        attrs["name"] = name
     if required:
         attrs["required"] = True
     if placeholder:
         attrs["placeholder"] = placeholder
-    if hint:
-        attrs["hint"] = hint
+    if value:
+        attrs["value"] = value
+    if checked:
+        attrs["checked"] = True
     if options:
         attrs["options"] = options
     if mask:
@@ -682,28 +681,100 @@ def form_input(type_, name, label, required=False, placeholder="", hint="", opti
         attrs["maskSourceName"] = mask_source
     if cities_source:
         attrs["citiesSourceName"] = cities_source
-    if variant != "field":
-        attrs["variant"] = variant
-    if value:
-        attrs["value"] = value
-    if checked:
-        attrs["checked"] = True
 
-    field_html = _field_control_html(type_, name, required, placeholder, mask, mask_source, options, checked, value, cities_source)
-    wrapped = _field_wrapper_html(type_, variant, required, hint, label, field_html)
+    html = _control_html(type_, id_, name, required, placeholder, mask, mask_source, options, checked, value, cities_source)
+    OUT.append(f'<!-- wp:axell/form-control {esc_attrs(attrs)} -->')
+    OUT.append(html)
+    OUT.append('<!-- /wp:axell/form-control -->')
 
-    OUT.append(f'<!-- wp:axellcore/form-input {esc_attrs(attrs)} -->')
-    OUT.append(wrapped)
-    OUT.append('<!-- /wp:axellcore/form-input -->')
+def form_label(for_, text, required=False, visually_hidden=False):
+    """axell/form-label — `label` not included in the comment JSON:
+    block.json declares it `source:"rich-text"` (see the historical note
+    that used to live on form_input() — same reasoning, same escaped-quote
+    parser bug avoided by keeping rich-text-sourced attributes out of the
+    JSON blob)."""
+    attrs = {"for": for_}
+    if required:
+        attrs["required"] = True
+    if visually_hidden:
+        attrs["visuallyHidden"] = True
+
+    cls = 'wp-block-axell-form-label' + ( ' is-visually-hidden' if visually_hidden else '' )
+    req_span = '<span class="aac-req"> *</span>' if required else ''
+    html = f'<label class="{cls}" for="{for_}"><span class="aac-field-label-text">{text}</span>{req_span}</label>'
+
+    OUT.append(f'<!-- wp:axell/form-label {esc_attrs(attrs)} -->')
+    OUT.append(html)
+    OUT.append('<!-- /wp:axell/form-label -->')
+
+def field(type_, name, label, required=False, placeholder="", hint="", options=None, mask="", mask_source="", value="", checked=False, cities_source="", visually_hidden=False):
+    """The atomic 'field' unit: a core/group.aac-field wrapping a
+    axell/form-label + axell/form-control pair (`id`/`name` both = `name`,
+    already unique across the whole form — verified). Reuses
+    assets/css/sections.css's existing `.aac-field`/`.aac-req`/`.aac-hint`
+    rules completely unchanged — they're descendant selectors (`.aac-field
+    label`, `.aac-field input`), indifferent to which block renders the
+    actual `<label>`/`<input>`, as long as the DOM shape stays the same."""
+    def inner():
+        form_label(name, label, required, visually_hidden)
+        form_control(type_, name, required=required, placeholder=placeholder, mask=mask, mask_source=mask_source, options=options, checked=checked, value=value, cities_source=cities_source)
+        if hint:
+            paragraph(hint, 'aac-hint')
+    group('aac-field', inner)
+
+def consent_field(name, label, required=False):
+    """The consent checkbox — control-then-label composition (checkbox
+    first, then the label with its embedded link), replacing the old
+    `variant="consent"` special case. Reuses `.aac-consent` unchanged."""
+    def inner():
+        form_control('checkbox', name, required=required)
+        form_label(name, label, required=False)
+    group('aac-consent', inner)
 
 def form_row(className, fields_fn):
-    """A core/group wrapping a row of axellcore/form-input children — a
-    proper block-tree child of axellcore/form's InnerBlocks (not raw HTML),
-    so it survives being opened/re-saved in the block editor."""
+    """A core/group wrapping a row of `field()` groups — unchanged from
+    before (still `.aac-form-row`/`.aac-cols-*`, still a real block-tree
+    child of axell/form-fieldset's InnerBlocks)."""
     group('aac-form-row ' + className, fields_fn)
 
-def form_legend(text):
-    paragraph(text, 'aac-form-legend')
+def fieldset(legend_text, fields_fn):
+    """axell/form-fieldset — a real `<fieldset>`/`<legend>` pair, replacing
+    the old `core/group.aac-form-row` + separate `.aac-form-legend`-styled
+    paragraph. `.aac-apply-form fieldset`/`.aac-apply-form legend` in
+    sections.css already target plain element selectors (ported from the
+    original mockup, unused until now) — no new CSS needed.
+
+    `legend` is intentionally NOT included in the comment JSON — same
+    reasoning as form_label()'s `text`/the old form_input()'s `label`:
+    block.json declares it `source:"rich-text"`, so WordPress derives it
+    from the stored HTML itself; duplicating it into the JSON blob is
+    redundant and, for any future legend containing a quote/embedded HTML,
+    a repeat of the escaped-quote block-comment parser bug already found
+    and fixed once this session."""
+    legend_html = f'<legend class="aac-form-legend-text">{legend_text}</legend>' if legend_text else ''
+    OUT.append('<!-- wp:axell/form-fieldset {} -->')
+    OUT.append('<fieldset class="wp-block-axell-form-fieldset">' + legend_html)
+    fields_fn()
+    OUT.append('</fieldset>')
+    OUT.append('<!-- /wp:axell/form-fieldset -->')
+
+def form_notification(type_, paragraphs_html):
+    """axell/form-submission-notification — starts hidden
+    (assets/css/sections.css's .aac-notice), toggled visible by
+    assets/js/frontend.js's showFormNotice() once the REST fetch() resolves.
+    Replaces the old window.alert()-based feedback; see
+    includes/blocks/form/form-submission-notification/index.js's header
+    comment for the heritage note (ported from Gutenberg's removed
+    core/form-submission-notification block, adapted for this form's
+    no-page-reload submission)."""
+    attrs = {"type": type_}
+    cls = f'wp-block-axell-form-submission-notification aac-notice aac-notice-{type_}'
+    OUT.append(f'<!-- wp:axell/form-submission-notification {esc_attrs(attrs)} -->')
+    OUT.append(f'<div class="{cls}" data-aac-notice-type="{type_}">')
+    for html in paragraphs_html:
+        paragraph(html)
+    OUT.append('</div>')
+    OUT.append('<!-- /wp:axell/form-submission-notification -->')
 
 def apply_section():
     def cols():
@@ -721,88 +792,102 @@ def apply_section():
         column(None, side, className='aac-apply-side aac-reveal')
 
         def form_col():
-            # axellcore/form's save() renders `<form>{innerBlocks}</form>` from
-            # blockProps — every child here MUST be a real block (form_input /
-            # group / html_block), never raw fieldset/div text, or the editor's
-            # save()-recomputation would mismatch the hand-seeded HTML and flag
-            # the block as invalid the moment someone opens this page.
-            OUT.append('<!-- wp:axellcore/form -->')
-            OUT.append('<form class="wp-block-axellcore-form aac-apply-form" data-aac-club-form novalidate="">')
+            # axell/form's save() renders `<form>{innerBlocks}</form>` from
+            # blockProps — every child here MUST be a real block (field() /
+            # fieldset() / group / html_block), never raw fieldset/div text,
+            # or the editor's save()-recomputation would mismatch the
+            # hand-seeded HTML and flag the block as invalid the moment
+            # someone opens this page.
+            OUT.append(f'<!-- wp:axell/form {esc_attrs({"submitsToRest": True, "className": "aac-apply-form"})} -->')
+            OUT.append('<form class="wp-block-axell-form aac-apply-form" data-aac-club-form novalidate="">')
 
-            form_legend('01 — Autoria')
-            def row1a():
-                form_input('text', 'nome', 'Nome completo', True, 'Como devemos chamá-lo(a)?')
-                form_input('text', 'escritorio', 'Escritório / Atelê', True, 'Nome do escritório')
-            form_row('aac-cols-2', row1a)
-            def row1b():
-                form_input('email', 'email', 'E-mail profissional', True, 'voce@escritorio.com.br')
-                form_input('tel', 'telefone', 'Telefone', True, '(11) 90000-0000', mask='phone')
-                form_input('text', 'registro', 'Registro (CAU / CREA / ABD)', False, 'A00000-0')
-            form_row('aac-cols-3', row1b)
-            def row1c():
-                form_input('select', 'atuacao', 'Atuação principal', True, placeholder='Selecione uma opção', options=[
-                    {"label": "Arquitetura residencial de alto padrão", "value": "Arquitetura residencial de alto padrão"},
-                    {"label": "Design de interiores", "value": "Design de interiores"},
-                    {"label": "Arquitetura corporativa / hospitalidade", "value": "Arquitetura corporativa / hospitalidade"},
-                    {"label": "Wellness · Spa · Hotelaria", "value": "Wellness · Spa · Hotelaria"},
-                    {"label": "Outros", "value": "Outros"},
-                ])
-                form_input('url', 'portfolio', 'Portfólio (URL)', False, 'https://…', hint='Site, Instagram, Behance ou drive com projetos.')
-            form_row('aac-cols-2', row1c)
+            def section1():
+                def row1a():
+                    field('text', 'nome', 'Nome completo', True, 'Como devemos chamá-lo(a)?')
+                    field('text', 'escritorio', 'Escritório / Atelê', True, 'Nome do escritório')
+                form_row('aac-cols-2', row1a)
+                def row1b():
+                    field('email', 'email', 'E-mail profissional', True, 'voce@escritorio.com.br')
+                    field('tel', 'telefone', 'Telefone', True, '(11) 90000-0000', mask='phone')
+                    field('text', 'registro', 'Registro (CAU / CREA / ABD)', False, 'A00000-0')
+                form_row('aac-cols-3', row1b)
+                def row1c():
+                    field('select', 'atuacao', 'Atuação principal', True, placeholder='Selecione uma opção', options=[
+                        {"label": "Arquitetura residencial de alto padrão", "value": "Arquitetura residencial de alto padrão"},
+                        {"label": "Design de interiores", "value": "Design de interiores"},
+                        {"label": "Arquitetura corporativa / hospitalidade", "value": "Arquitetura corporativa / hospitalidade"},
+                        {"label": "Wellness · Spa · Hotelaria", "value": "Wellness · Spa · Hotelaria"},
+                        {"label": "Outros", "value": "Outros"},
+                    ])
+                    field('url', 'portfolio', 'Portfólio (URL)', False, 'https://…', hint='Site, Instagram, Behance ou drive com projetos.')
+                form_row('aac-cols-2', row1c)
+            fieldset('01 — Autoria', section1)
 
-            form_legend('02 — Documento')
-            def row2():
-                form_input('select', 'tipoDoc', 'Tipo de cadastro', True, placeholder='Selecione', options=[
-                    {"label": "Pessoa Física · CPF", "value": "cpf"},
-                    {"label": "Pessoa Jurídica · CNPJ", "value": "cnpj"},
-                ])
-                form_input('text', 'documento', 'CPF ou CNPJ', True, '000.000.000-00 / 12.ABC.345/01DE-35',
-                            hint='Utilizado para emissão de bônus e nota fiscal. CNPJ alfanumérico é aceito.', mask='cpf-cnpj', mask_source='tipoDoc')
-            form_row('aac-cols-2', row2)
+            def section2():
+                def row2():
+                    field('select', 'tipoDoc', 'Tipo de cadastro', True, placeholder='Selecione', options=[
+                        {"label": "Pessoa Física · CPF", "value": "cpf"},
+                        {"label": "Pessoa Jurídica · CNPJ", "value": "cnpj"},
+                    ])
+                    field('text', 'documento', 'CPF ou CNPJ', True, '000.000.000-00 / 12.ABC.345/01DE-35',
+                                hint='Utilizado para emissão de bônus e nota fiscal. CNPJ alfanumérico é aceito.', mask='cpf-cnpj', mask_source='tipoDoc')
+                form_row('aac-cols-2', row2)
+            fieldset('02 — Documento', section2)
 
-            form_legend('03 — Endereço do escritório')
-            def row3a():
-                form_input('text', 'rua', 'Logradouro', True, 'Rua, Avenida, Alameda…')
-                form_input('text', 'numero', 'Número', True, '000')
-                form_input('text', 'complemento', 'Complemento', False, 'Sala, andar, conjunto')
-            form_row('aac-cols-addr', row3a)
-            def row3b():
-                form_input('text', 'bairro', 'Bairro', True, 'Bairro')
-                form_input('text', 'referencia', 'Referência', False, 'Próximo a…')
-            form_row('aac-cols-2', row3b)
-            def row3c():
-                # UF drives the Cidade select: choosing a state fetches and
-                # populates that state's cities (assets/js/frontend.js,
-                # GET /axellcore-atelierclub/v1/cities?uf=XX — data adapted
-                # from fervidum/f9brcities, see includes/data/br-*.php).
-                # UF must come first so it's usable before Cidade exists.
-                uf_options = [{"label": s, "value": s} for s in
-                    ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']]
-                form_input('select', 'uf', 'UF', True, placeholder='—', options=uf_options)
-                form_input('select', 'cidade', 'Cidade', True, placeholder='Selecione o estado', cities_source='uf')
-                form_input('text', 'cep', 'CEP', True, '00000-000', mask='cep')
-            form_row('aac-cols-city', row3c)
+            def section3():
+                def row3a():
+                    field('text', 'rua', 'Logradouro', True, 'Rua, Avenida, Alameda…')
+                    field('text', 'numero', 'Número', True, '000')
+                    field('text', 'complemento', 'Complemento', False, 'Sala, andar, conjunto')
+                form_row('aac-cols-addr', row3a)
+                def row3b():
+                    field('text', 'bairro', 'Bairro', True, 'Bairro')
+                    field('text', 'referencia', 'Referência', False, 'Próximo a…')
+                form_row('aac-cols-2', row3b)
+                def row3c():
+                    # UF drives the Cidade select: choosing a state fetches
+                    # and populates that state's cities (assets/js/frontend.js,
+                    # GET /axellcore-atelierclub/v1/cities?uf=XX — data adapted
+                    # from fervidum/f9brcities, see includes/data/br-*.php).
+                    # UF must come first so it's usable before Cidade exists.
+                    uf_options = [{"label": s, "value": s} for s in
+                        ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']]
+                    field('select', 'uf', 'UF', True, placeholder='—', options=uf_options)
+                    field('select', 'cidade', 'Cidade', True, placeholder='Selecione o estado', cities_source='uf')
+                    field('text', 'cep', 'CEP', True, '00000-000', mask='cep')
+                form_row('aac-cols-city', row3c)
+            fieldset('03 — Endereço do escritório', section3)
 
-            form_legend('04 — Lojas parceiras')
-            def partners():
-                paragraph('Onde você costuma especificar Axell?', 'aac-field-label-text')
-                paragraph('Liste até <strong style="color:var(--bronze-3);font-weight:500">cinco</strong> revendas ou showrooms parceiros com quem você trabalha. Preencha apenas o que fizer sentido — os campos vazios podem ficar em branco.', 'aac-hint')
-                # The 5 partner-store inputs stay as core/html: they're plain
-                # optional <input name="lojaN"> fields with no visible <label>
-                # — a shape axellcore/form-input's .aac-field wrapper doesn't
-                # produce, and not worth a new field variant for 5 rarely-
-                # edited placeholder strings. They ARE a genuine sequential
-                # list though, so it's a real <ol type="i"> here — the browser
-                # numbers each <li> natively (i., ii., iii.…), not a hand-
-                # typed numeral span.
-                slots = ''.join(
-                    f'<li class="aac-partner-slot"><input type="text" name="loja{i}" placeholder="Nome da loja · cidade"></li>'
-                    for i in range(1, 6)
-                )
-                html_block(f'<ol type="i" class="aac-partner-slots">{slots}</ol>')
-            group('aac-field', partners)
+            def section4():
+                def partners():
+                    paragraph('Onde você costuma especificar Axell?', 'aac-field-label-text')
+                    paragraph('Liste até <strong style="color:var(--bronze-3);font-weight:500">cinco</strong> revendas ou showrooms parceiros com quem você trabalha. Preencha apenas o que fizer sentido — os campos vazios podem ficar em branco.', 'aac-hint')
+                    # The 5 partner-store inputs stay as core/html: they're
+                    # plain optional <input name="lojaN"> fields with no
+                    # visible <label> — a shape axell/form-control/
+                    # axell/form-label don't produce together as one unit,
+                    # and not worth a dedicated field for 5 rarely-edited
+                    # placeholder strings. They ARE a genuine sequential
+                    # list though, so it's a real <ol type="i"> here — the
+                    # browser numbers each <li> natively (i., ii., iii.…),
+                    # not a hand-typed numeral span.
+                    slots = ''.join(
+                        f'<li class="aac-partner-slot"><input type="text" name="loja{i}" placeholder="Nome da loja · cidade"></li>'
+                        for i in range(1, 6)
+                    )
+                    html_block(f'<ol type="i" class="aac-partner-slots">{slots}</ol>')
+                group('aac-field', partners)
+            fieldset('04 — Lojas parceiras', section4)
 
-            form_input('checkbox', 'regulamento', 'Li e concordo com o <a href="#">regulamento do Atelier Axell Club</a> e com o tratamento dos meus dados conforme a Política de Privacidade e a LGPD.', True, variant='consent')
+            consent_field('regulamento', 'Li e concordo com o <a href="#">regulamento do Atelier Axell Club</a> e com o tratamento dos meus dados conforme a Política de Privacidade e a LGPD.', required=True)
+
+            form_notification('success', [
+                'Sua solicitação foi enviada.',
+                'A curadoria Axell entrará em contato em breve com o próximo passo. Bem-vindo(a) ao Atelier.',
+            ])
+            form_notification('error', [
+                'Não foi possível enviar sua solicitação. Tente novamente em instantes.',
+            ])
 
             def submit_row():
                 # A real <button type="submit"> — core/button's default
@@ -815,7 +900,7 @@ def apply_section():
             group('aac-submit-row', submit_row)
 
             OUT.append('</form>')
-            OUT.append('<!-- /wp:axellcore/form -->')
+            OUT.append('<!-- /wp:axell/form -->')
         column(None, form_col)
     columns('aac-apply aac-section aac-container', cols)
 

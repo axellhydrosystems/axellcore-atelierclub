@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axell/form",
+  "title": "Atelier Form",
+  "category": "text",
+  "description": "Self-contained <form> wrapper for the Atelier Axell Club application form. Submits to the plugin's REST endpoint, which creates an aac_member post and resolves its Country/State/City taxonomy term.",
+  "keywords": [
+    "form",
+    "application",
+    "adesão"
+  ],
+  "textdomain": "axellcore-atelierclub",
+  "attributes": {
+    "submitsToRest": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": false,
+    "className": true,
+    "customClassName": true
+  },
+  "editorScript": [
+    "file:./index.js",
+    "file:./member-apply-variation.js"
+  ]
+}

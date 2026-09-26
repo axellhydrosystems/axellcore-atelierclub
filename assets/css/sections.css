@@ -1347,6 +1347,36 @@ section{ position: relative; }
 }
 .aac-consent a{ color: var(--bronze-2); text-decoration: underline; text-underline-offset: 3px; }
 
+/* axellcore/form-submission-notification — hidden until assets/js/frontend.js
+   adds .is-active on submit (see class-blocks.php / form-submission-
+   notification's own header comment for why this differs from the removed
+   core/form-submission-notification block's GET-param approach). */
+.aac-notice{
+  display: none;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 20px;
+  margin-top: 24px;
+  border: 1px solid var(--line-dk-2);
+  border-left: 3px solid var(--bronze-2);
+  border-radius: var(--radius-lg);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(239,236,228,0.85);
+  font-weight: 300;
+}
+.aac-notice.is-active{ display: flex; }
+.aac-notice p{ margin: 0; }
+.aac-notice p + p{ margin-top: 8px; }
+.aac-notice-error{ border-left-color: var(--amber); }
+.aac-notice-detail{
+  margin-top: 8px !important;
+  font-style: italic;
+  font-family: var(--serif);
+  color: rgba(239,236,228,0.55);
+  font-size: 12px;
+}
+
 .aac-apply-form .aac-submit-row{
   display: flex; align-items: center; justify-content: space-between;
   gap: 20px; margin-top: 24px;

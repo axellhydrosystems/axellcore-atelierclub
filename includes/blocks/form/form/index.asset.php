@@ -6,6 +6,6 @@
  * when one is present (see wp-includes/blocks.php).
  */
 return array(
-	'dependencies' => array( 'wp-blocks', 'wp-element', 'wp-block-editor' ),
+	'dependencies' => array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-i18n' ),
 	'version'      => AXELLCORE_ATELIERCLUB_VERSION,
 );

@@ -274,6 +274,35 @@
 	} );
 
 	/* ---------------------------------------------------------------------
+	 * Success/error feedback — toggles the matching
+	 * axellcore/form-submission-notification block (data-aac-notice-type)
+	 * instead of a blocking window.alert(). See this plugin's CLAUDE.md for
+	 * why this differs from the reference core/form-submission-notification
+	 * block's full-page-reload + ?wp-form-result= approach: this form never
+	 * navigates away, so visibility is just a class toggle after fetch()
+	 * resolves.
+	 * ------------------------------------------------------------------- */
+	function showFormNotice( form, type, detail ) {
+		form.querySelectorAll( '[data-aac-notice-type]' ).forEach( function ( notice ) {
+			var isMatch = notice.getAttribute( 'data-aac-notice-type' ) === type;
+			notice.classList.toggle( 'is-active', isMatch );
+			if ( isMatch ) {
+				var existingDetail = notice.querySelector( '.aac-notice-detail' );
+				if ( detail ) {
+					if ( ! existingDetail ) {
+						existingDetail = document.createElement( 'p' );
+						existingDetail.className = 'aac-notice-detail';
+						notice.appendChild( existingDetail );
+					}
+					existingDetail.textContent = detail;
+				} else if ( existingDetail ) {
+					existingDetail.remove();
+				}
+			}
+		} );
+	}
+
+	/* ---------------------------------------------------------------------
 	 * Submit handler — POSTs to the real REST endpoint
 	 * (includes/class-rest.php's /members route), which creates the
 	 * aac_member post and resolves the Country > State > City taxonomy term.
@@ -311,14 +340,10 @@
 						throw new Error( ( result.body && result.body.message ) || 'Erro ao enviar.' );
 					}
 					form.reset();
-					window.alert(
-						'Sua solicitação foi enviada.\n\nA curadoria Axell entrará em contato em breve com o próximo passo.\n\nBem-vindo(a) ao Atelier.'
-					);
+					showFormNotice( form, 'success' );
 				} )
 				.catch( function ( error ) {
-					window.alert(
-						'Não foi possível enviar sua solicitação. Tente novamente em instantes.\n\n' + error.message
-					);
+					showFormNotice( form, 'error', error.message );
 				} )
 				.finally( function () {
 					if ( submitBtn ) {

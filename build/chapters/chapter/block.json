@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axellcore/chapter",
+  "title": "Atelier Chapter",
+  "category": "text",
+  "icon": "text-page",
+  "parent": [
+    "axellcore/chapters"
+  ],
+  "description": "One numbered chapter. The 'Capítulo NN' prefix is generated automatically (CSS counter, not stored text) — reordering chapters in the editor renumbers them without editing any content. Only the label after the number, and the chapter's own content, are stored.",
+  "keywords": [
+    "chapter",
+    "capítulo"
+  ],
+  "textdomain": "axellcore-atelierclub",
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "",
+      "role": "content"
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": false,
+    "className": true,
+    "customClassName": true
+  },
+  "editorScript": "file:./index.js"
+}

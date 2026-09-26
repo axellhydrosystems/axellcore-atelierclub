@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axell/form-fieldset",
+	"title": "Form Fieldset",
+	"category": "text",
+	"ancestor": [ "axell/form" ],
+	"description": "Groups a set of related form fields inside a real <fieldset>, with an optional <legend>.",
+	"keywords": [ "fieldset", "legend", "form", "group" ],
+	"textdomain": "axellcore-atelierclub",
+	"attributes": {
+		"legend": {
+			"type": "rich-text",
+			"source": "rich-text",
+			"selector": ".aac-form-legend-text",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"className": true,
+		"customClassName": true,
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": { "blockGap": true }
+		},
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalDefaultControls": { "fontSize": false }
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"gradients": true,
+			"__experimentalDefaultControls": { "text": false, "background": false }
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalDefaultControls": { "color": false, "radius": false, "style": false, "width": false }
+		},
+		"layout": {
+			"allowSwitching": true,
+			"allowInheriting": false,
+			"default": { "type": "flex", "flexWrap": "wrap" }
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css"
+}

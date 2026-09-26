@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axell/form-submission-notification",
+  "title": "Atelier Form Notification",
+  "category": "text",
+  "icon": "feedback",
+  "ancestor": [
+    "axell/form"
+  ],
+  "description": "A success or error message shown after the application form is submitted via REST. Starts hidden; assets/js/frontend.js toggles it visible based on the fetch() result — see this plugin's CLAUDE.md for why this differs from Gutenberg's removed core/form-submission-notification block (which relied on a full-page reload + ?wp-form-result= GET param).",
+  "keywords": [
+    "form",
+    "notification",
+    "feedback",
+    "message"
+  ],
+  "textdomain": "axellcore-atelierclub",
+  "attributes": {
+    "type": {
+      "type": "string",
+      "default": "success"
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "className": true,
+    "customClassName": true
+  },
+  "editorScript": "file:./index.js"
+}

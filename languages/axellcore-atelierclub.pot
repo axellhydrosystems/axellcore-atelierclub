@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T13:31:25+00:00\n"
+"POT-Creation-Date: 2026-09-26T00:27:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axellcore-atelierclub\n"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "This page is provisioned by the axellcore-atelierclub plugin. Replace this placeholder with the full landing-page sections in the block editor."
 msgstr ""
 
-#: includes/class-blocks.php:99
+#: includes/class-blocks.php:106
 #: includes/blocks/chapters/chapter/index.js:69
 msgid "Chapter"
 msgstr ""
@@ -139,149 +139,389 @@ msgstr ""
 msgid "Could not save your application."
 msgstr ""
 
-#: includes/class-template-loader.php:74
+#: includes/class-template-loader.php:76
 msgid "Atelier — Blank Canvas"
 msgstr ""
 
-#: includes/class-template-loader.php:75
+#: includes/class-template-loader.php:77
 msgid "Self-contained canvas for the Atelier Axell Club landing page. No header/footer template parts — the page content renders alone."
+msgstr ""
+
+#: includes/class-template-loader.php:101
+msgid "Atelier — No Class (experimental)"
+msgstr ""
+
+#: includes/class-template-loader.php:102
+msgid "Same design, zero aac- CSS classes — styled entirely via native block attributes (color/typography/spacing/border/position). Exists to find the real limit of that approach; not a production page."
 msgstr ""
 
 #: includes/blocks/chapters/chapter/index.js:78
 msgid "Chapter name…"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:25
+#: includes/blocks/form/form-control/index.js:46
+#: includes/blocks/form/form-input/index.js:55
 msgid "Text"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:26
+#: includes/blocks/form/form-control/index.js:47
+#: includes/blocks/form/form-input/index.js:56
 msgid "Email"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:27
+#: includes/blocks/form/form-control/index.js:48
+#: includes/blocks/form/form-input/index.js:57
 msgid "URL"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:28
+#: includes/blocks/form/form-control/index.js:49
+#: includes/blocks/form/form-input/index.js:58
 msgid "Number"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:29
-#: includes/blocks/form/form-input/index.js:40
+#: includes/blocks/form/form-control/index.js:50
+#: includes/blocks/form/form-control/index.js:61
+#: includes/blocks/form/form-input/index.js:59
+#: includes/blocks/form/form-input/index.js:70
 msgid "Phone"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:30
+#: includes/blocks/form/form-control/index.js:51
+#: includes/blocks/form/form-input/index.js:60
 msgid "Textarea"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:31
+#: includes/blocks/form/form-control/index.js:52
+#: includes/blocks/form/form-input/index.js:61
 msgid "Select (options)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:32
+#: includes/blocks/form/form-control/index.js:53
+#: includes/blocks/form/form-input/index.js:62
 msgid "Checkbox"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:33
+#: includes/blocks/form/form-control/index.js:54
+#: includes/blocks/form/form-input/index.js:63
 msgid "Hidden"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:37
+#: includes/blocks/form/form-control/index.js:58
+#: includes/blocks/form/form-input/index.js:67
 msgid "— none —"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:38
+#: includes/blocks/form/form-control/index.js:59
+#: includes/blocks/form/form-input/index.js:68
 msgid "CPF / CNPJ"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:39
+#: includes/blocks/form/form-control/index.js:60
+#: includes/blocks/form/form-input/index.js:69
 msgid "CEP (postal code)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:110
+#: includes/blocks/form/form-control/index.js:111
+#: includes/blocks/form/form-input/index.js:255
+msgid "Hidden field"
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:153
+#: includes/blocks/form/form-input/index.js:188
+msgid "Optional placeholder text"
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:154
+#: includes/blocks/form/form-input/index.js:189
+msgid "Optional placeholder…"
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:177
+#: includes/blocks/form/form-input/index.js:209
 msgid "Select an option"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:191
-msgid "Field label…"
+#: includes/blocks/form/form-control/index.js:213
+msgid "Control"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:203
-msgid "Field"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:205
+#: includes/blocks/form/form-control/index.js:215
+#: includes/blocks/form/form-input/index.js:337
+#: includes/blocks/form/form-submission-notification/index.js:67
 msgid "Type"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:213
-msgid "Field name (name attribute)"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:221
-msgid "Variant"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:224
-msgid "Default"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:225
-msgid "Consent (LGPD)"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:235
-msgid "Placeholder"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:243
+#: includes/blocks/form/form-control/index.js:224
+#: includes/blocks/form/form-input/index.js:368
 msgid "Value"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:251
+#: includes/blocks/form/form-control/index.js:232
+#: includes/blocks/form/form-input/index.js:376
 msgid "Checked by default"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:260
+#: includes/blocks/form/form-control/index.js:241
+#: includes/blocks/form/form-input/index.js:385
+#: includes/blocks/form/form-label/index.js:68
 msgid "Required"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:269
-msgid "Hint text (optional)"
-msgstr ""
-
-#: includes/blocks/form/form-input/index.js:277
+#: includes/blocks/form/form-control/index.js:249
+#: includes/blocks/form/form-input/index.js:402
 msgid "Options (one per line: Label|value)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:278
+#: includes/blocks/form/form-control/index.js:250
+#: includes/blocks/form/form-input/index.js:403
 msgid "E.g.: Individual · CPF|cpf"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:286
+#: includes/blocks/form/form-control/index.js:258
+#: includes/blocks/form/form-input/index.js:411
 msgid "Field (name) that populates these options"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:287
+#: includes/blocks/form/form-control/index.js:259
+#: includes/blocks/form/form-input/index.js:412
 msgid "Leave empty for a static list. If set, this select starts empty/disabled and assets/js/frontend.js fetches its options from the REST cities endpoint whenever that field changes."
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:296
+#: includes/blocks/form/form-control/index.js:268
+#: includes/blocks/form/form-input/index.js:421
 msgid "Input mask (advanced)"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:298
+#: includes/blocks/form/form-control/index.js:270
+#: includes/blocks/form/form-input/index.js:423
 msgid "Mask"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:307
+#: includes/blocks/form/form-control/index.js:279
+#: includes/blocks/form/form-input/index.js:432
 msgid "Field (name) that decides CPF vs. CNPJ"
 msgstr ""
 
-#: includes/blocks/form/form-input/index.js:308
+#: includes/blocks/form/form-control/index.js:280
+#: includes/blocks/form/form-input/index.js:433
 msgid "Name of the select field whose value (\"cpf\"/\"cnpj\") drives this mask."
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:292
+msgid "ID"
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:294
+msgid "Matches the paired form-label block’s \"For\" field. Also used as the fallback name attribute when Name is left empty."
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:300
+msgid "Name (name attribute)"
+msgstr ""
+
+#: includes/blocks/form/form-control/index.js:302
+msgid "Leave empty to reuse the ID."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:22
+msgid "Text Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:23
+#: includes/blocks/form/form-input/variations.js:25
+msgid "A generic text input."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:31
+msgid "Email Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:32
+#: includes/blocks/form/form-input/variations.js:34
+msgid "Used for email addresses."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:40
+msgid "URL Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:41
+#: includes/blocks/form/form-input/variations.js:43
+msgid "Used for URLs."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:49
+msgid "Phone Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:50
+#: includes/blocks/form/form-input/variations.js:52
+msgid "Used for phone numbers."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:58
+msgid "Number Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:59
+#: includes/blocks/form/form-input/variations.js:61
+msgid "A numeric input."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:67
+msgid "Textarea Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:68
+#: includes/blocks/form/form-input/variations.js:70
+msgid "A textarea input for multiple lines of text."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:76
+msgid "Select Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:77
+#: includes/blocks/form/form-input/variations.js:79
+msgid "A dropdown with a fixed or dynamically-sourced list of options."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:85
+msgid "Checkbox Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:86
+#: includes/blocks/form/form-input/variations.js:88
+msgid "A simple checkbox input."
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:94
+msgid "Hidden Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/variations.js:95
+#: includes/blocks/form/form-input/variations.js:97
+msgid "A hidden input field."
+msgstr ""
+
+#: includes/blocks/form/form-fieldset/index.js:50
+msgid "Legend (optional)…"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:321
+#: includes/blocks/form/form-label/index.js:52
+#: includes/blocks/form/form-label/index.js:66
+msgid "Label"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:321
+#: includes/blocks/form/form-label/index.js:52
+msgid "Empty label"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:323
+#: includes/blocks/form/form-label/index.js:54
+msgid "Field label…"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:335
+msgid "Field"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:346
+msgid "Variant"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:349
+msgid "Default"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:350
+msgid "Consent (LGPD)"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:360
+msgid "Placeholder"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:394
+msgid "Hint text (optional)"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:450
+msgid "Field name (name attribute)"
+msgstr ""
+
+#: includes/blocks/form/form-input/index.js:452
+msgid "Leave empty to derive it from the label automatically."
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:24
+msgid "Text Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:33
+msgid "Email Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:42
+msgid "URL Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:51
+msgid "Phone Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:60
+msgid "Number Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:69
+msgid "Textarea Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:78
+msgid "Select Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:87
+msgid "Checkbox Input"
+msgstr ""
+
+#: includes/blocks/form/form-input/variations.js:96
+msgid "Hidden Input"
+msgstr ""
+
+#: includes/blocks/form/form-label/index.js:69
+msgid "Shows a \"*\" next to the label. Set the matching control’s own Required toggle too — they’re independent."
+msgstr ""
+
+#: includes/blocks/form/form-label/index.js:76
+msgid "Visually hidden"
+msgstr ""
+
+#: includes/blocks/form/form-label/index.js:77
+msgid "Keeps the label readable by screen readers while hiding it visually — useful when the field’s purpose is already clear from context (e.g. a placeholder-only search box)."
+msgstr ""
+
+#: includes/blocks/form/form-label/index.js:89
+msgid "For"
+msgstr ""
+
+#: includes/blocks/form/form-label/index.js:91
+msgid "The id of the axell/form-control this label belongs to."
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/index.js:65
+msgid "Notification"
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/index.js:70
+msgid "Success"
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/index.js:71
+msgid "Error"
 msgstr ""
 
 #: includes/blocks/chapters/chapter/block.json
@@ -321,6 +561,69 @@ msgctxt "block keyword"
 msgid "numbering"
 msgstr ""
 
+#: includes/blocks/form/form-control/block.json
+msgctxt "block title"
+msgid "Form Control"
+msgstr ""
+
+#: includes/blocks/form/form-control/block.json
+msgctxt "block description"
+msgid "The actual input/select/textarea of a form field — text, email, tel, number, textarea, select, checkbox, or hidden, with optional input masking (CPF/CNPJ, CEP, phone). Pair with an axell/form-label sibling (same id/for) for the visible label — see this plugin's CLAUDE.md."
+msgstr ""
+
+#: includes/blocks/form/form-control/block.json
+#: includes/blocks/form/form-input/block.json
+msgctxt "block keyword"
+msgid "input"
+msgstr ""
+
+#: includes/blocks/form/form-control/block.json
+msgctxt "block keyword"
+msgid "control"
+msgstr ""
+
+#: includes/blocks/form/form-control/block.json
+#: includes/blocks/form/form-input/block.json
+#: includes/blocks/form/form-label/block.json
+msgctxt "block keyword"
+msgid "field"
+msgstr ""
+
+#: includes/blocks/form/form-control/block.json
+#: includes/blocks/form/form-fieldset/block.json
+#: includes/blocks/form/form-input/block.json
+#: includes/blocks/form/form-label/block.json
+#: includes/blocks/form/form-submission-notification/block.json
+#: includes/blocks/form/form/block.json
+msgctxt "block keyword"
+msgid "form"
+msgstr ""
+
+#: includes/blocks/form/form-fieldset/block.json
+msgctxt "block title"
+msgid "Form Fieldset"
+msgstr ""
+
+#: includes/blocks/form/form-fieldset/block.json
+msgctxt "block description"
+msgid "Groups a set of related form fields inside a real <fieldset>, with an optional <legend>."
+msgstr ""
+
+#: includes/blocks/form/form-fieldset/block.json
+msgctxt "block keyword"
+msgid "fieldset"
+msgstr ""
+
+#: includes/blocks/form/form-fieldset/block.json
+msgctxt "block keyword"
+msgid "legend"
+msgstr ""
+
+#: includes/blocks/form/form-fieldset/block.json
+msgctxt "block keyword"
+msgid "group"
+msgstr ""
+
 #: includes/blocks/form/form-input/block.json
 msgctxt "block title"
 msgid "Atelier Form Field"
@@ -328,23 +631,47 @@ msgstr ""
 
 #: includes/blocks/form/form-input/block.json
 msgctxt "block description"
-msgid "A form field: text, email, tel, number, textarea, select, consent checkbox, or hidden — with optional input masking (CPF/CNPJ, CEP, phone)."
+msgid "Deprecated — superseded by axell/form-label + axell/form-control (see this plugin's CLAUDE.md). Kept registered, hidden from the inserter, so any pre-existing content using it keeps rendering/editing correctly."
 msgstr ""
 
-#: includes/blocks/form/form-input/block.json
-msgctxt "block keyword"
-msgid "input"
+#: includes/blocks/form/form-label/block.json
+msgctxt "block title"
+msgid "Form Label"
 msgstr ""
 
-#: includes/blocks/form/form-input/block.json
-msgctxt "block keyword"
-msgid "field"
+#: includes/blocks/form/form-label/block.json
+msgctxt "block description"
+msgid "A form field's label, associated with its axell/form-control sibling via a matching id/for pair. Can be visually hidden (still read by screen readers) via the \"Visually hidden\" toggle."
 msgstr ""
 
-#: includes/blocks/form/form-input/block.json
-#: includes/blocks/form/form/block.json
+#: includes/blocks/form/form-label/block.json
 msgctxt "block keyword"
-msgid "form"
+msgid "label"
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/block.json
+msgctxt "block title"
+msgid "Atelier Form Notification"
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/block.json
+msgctxt "block description"
+msgid "A success or error message shown after the application form is submitted via REST. Starts hidden; assets/js/frontend.js toggles it visible based on the fetch() result — see this plugin's CLAUDE.md for why this differs from Gutenberg's removed core/form-submission-notification block (which relied on a full-page reload + ?wp-form-result= GET param)."
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/block.json
+msgctxt "block keyword"
+msgid "notification"
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/block.json
+msgctxt "block keyword"
+msgid "feedback"
+msgstr ""
+
+#: includes/blocks/form/form-submission-notification/block.json
+msgctxt "block keyword"
+msgid "message"
 msgstr ""
 
 #: includes/blocks/form/form/block.json

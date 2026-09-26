@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axell/form-label",
+  "title": "Form Label",
+  "category": "text",
+  "ancestor": [
+    "axell/form"
+  ],
+  "description": "A form field's label, associated with its axell/form-control sibling via a matching id/for pair. Can be visually hidden (still read by screen readers) via the \"Visually hidden\" toggle. A required-field asterisk, if wanted, is just part of the label's own text content (e.g. embed a styled span directly) — not a separate attribute.",
+  "keywords": [
+    "label",
+    "field",
+    "form"
+  ],
+  "textdomain": "axellcore-atelierclub",
+  "attributes": {
+    "text": {
+      "type": "rich-text",
+      "source": "rich-text",
+      "selector": "label",
+      "default": "Label"
+    },
+    "for": {
+      "type": "string",
+      "default": ""
+    },
+    "visuallyHidden": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": true,
+    "customClassName": true,
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "__experimentalDefaultControls": {
+        "margin": false
+      }
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalLetterSpacing": true,
+      "__experimentalTextTransform": true,
+      "__experimentalDefaultControls": {
+        "fontSize": true
+      }
+    },
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true,
+      "gradients": true,
+      "__experimentalDefaultControls": {
+        "text": true
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.scss"
+}

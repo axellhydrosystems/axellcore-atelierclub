@@ -1,0 +1,32 @@
+{
+	"name": "axellcore-atelierclub",
+	"private": true,
+	"description": "Build tooling for axellcore-atelierclub's blocks (TypeScript/TSX via @wordpress/scripts).",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js",
+		"format": "wp-scripts format",
+		"check-types": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@types/wordpress__block-editor": "^15.0.6",
+		"@types/wordpress__blocks": "^15.10.2",
+		"@types/wordpress__components": "^23.0.12",
+		"@types/wordpress__data": "^6.0.2",
+		"@types/wordpress__rich-text": "^6.4.5",
+		"@wordpress/scripts": "^36.0.0",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"@wordpress/block-editor": "^18.0.0",
+		"@wordpress/blocks": "^16.1.0",
+		"@wordpress/components": "^41.0.0",
+		"@wordpress/data": "^10.56.0",
+		"@wordpress/element": "^8.8.0",
+		"@wordpress/i18n": "^6.29.0",
+		"@wordpress/primitives": "^4.56.0",
+		"@wordpress/rich-text": "^7.56.0"
+	}
+}

@@ -952,99 +952,226 @@
 <!-- /wp:column -->
 <!-- wp:column {} -->
 <div class="wp-block-column">
-<!-- wp:axellcore/form -->
-<form class="wp-block-axellcore-form aac-apply-form" data-aac-club-form novalidate="">
-<!-- wp:paragraph {"className":"aac-form-legend"} -->
-<p class="wp-block-paragraph aac-form-legend">01 — Autoria</p>
-<!-- /wp:paragraph -->
+<!-- wp:axell/form {"submitsToRest":true,"className":"aac-apply-form"} -->
+<form class="wp-block-axell-form aac-apply-form" data-aac-club-form novalidate="">
+<!-- wp:axell/form-fieldset {} -->
+<fieldset class="wp-block-axell-form-fieldset"><legend class="aac-form-legend-text">01 — Autoria</legend>
 <!-- wp:group {"className":"aac-form-row aac-cols-2"} -->
 <div class="wp-block-group aac-form-row aac-cols-2">
-<!-- wp:axellcore/form-input {"type":"text","name":"nome","required":true,"placeholder":"Como devemos chamá-lo(a)?"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Nome completo</span><span class="aac-req"> *</span></label><input type="text" name="nome" required="" placeholder="Como devemos chamá-lo(a)?"></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"escritorio","required":true,"placeholder":"Nome do escritório"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Escritório / Atelê</span><span class="aac-req"> *</span></label><input type="text" name="escritorio" required="" placeholder="Nome do escritório"></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"nome","required":true} -->
+<label class="wp-block-axell-form-label" for="nome"><span class="aac-field-label-text">Nome completo</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"nome","required":true,"placeholder":"Como devemos chamá-lo(a)?"} -->
+<input class="wp-block-axell-form-control" id="nome" name="nome" required aria-required="true" placeholder="Como devemos chamá-lo(a)?" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"escritorio","required":true} -->
+<label class="wp-block-axell-form-label" for="escritorio"><span class="aac-field-label-text">Escritório / Atelê</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"escritorio","required":true,"placeholder":"Nome do escritório"} -->
+<input class="wp-block-axell-form-control" id="escritorio" name="escritorio" required aria-required="true" placeholder="Nome do escritório" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"aac-form-row aac-cols-3"} -->
 <div class="wp-block-group aac-form-row aac-cols-3">
-<!-- wp:axellcore/form-input {"type":"email","name":"email","required":true,"placeholder":"voce@escritorio.com.br"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">E-mail profissional</span><span class="aac-req"> *</span></label><input type="email" name="email" required="" placeholder="voce@escritorio.com.br"></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"tel","name":"telefone","required":true,"placeholder":"(11) 90000-0000","mask":"phone"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Telefone</span><span class="aac-req"> *</span></label><input type="tel" name="telefone" required="" placeholder="(11) 90000-0000" data-aac-mask="phone"></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"registro","placeholder":"A00000-0"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Registro (CAU / CREA / ABD)</span></label><input type="text" name="registro" placeholder="A00000-0"></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"email","required":true} -->
+<label class="wp-block-axell-form-label" for="email"><span class="aac-field-label-text">E-mail profissional</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"email","id":"email","required":true,"placeholder":"voce@escritorio.com.br"} -->
+<input class="wp-block-axell-form-control" id="email" name="email" required aria-required="true" placeholder="voce@escritorio.com.br" type="email"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"telefone","required":true} -->
+<label class="wp-block-axell-form-label" for="telefone"><span class="aac-field-label-text">Telefone</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"tel","id":"telefone","required":true,"placeholder":"(11) 90000-0000","mask":"phone"} -->
+<input class="wp-block-axell-form-control" id="telefone" name="telefone" required aria-required="true" placeholder="(11) 90000-0000" data-aac-mask="phone" type="tel"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"registro"} -->
+<label class="wp-block-axell-form-label" for="registro"><span class="aac-field-label-text">Registro (CAU / CREA / ABD)</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"registro","placeholder":"A00000-0"} -->
+<input class="wp-block-axell-form-control" id="registro" name="registro" placeholder="A00000-0" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"aac-form-row aac-cols-2"} -->
 <div class="wp-block-group aac-form-row aac-cols-2">
-<!-- wp:axellcore/form-input {"type":"select","name":"atuacao","required":true,"placeholder":"Selecione uma opção","options":[{"label":"Arquitetura residencial de alto padrão","value":"Arquitetura residencial de alto padrão"},{"label":"Design de interiores","value":"Design de interiores"},{"label":"Arquitetura corporativa / hospitalidade","value":"Arquitetura corporativa / hospitalidade"},{"label":"Wellness · Spa · Hotelaria","value":"Wellness · Spa · Hotelaria"},{"label":"Outros","value":"Outros"}]} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Atuação principal</span><span class="aac-req"> *</span></label><select name="atuacao" required="" placeholder="Selecione uma opção"><option value="">Selecione uma opção</option><option value="Arquitetura residencial de alto padrão">Arquitetura residencial de alto padrão</option><option value="Design de interiores">Design de interiores</option><option value="Arquitetura corporativa / hospitalidade">Arquitetura corporativa / hospitalidade</option><option value="Wellness · Spa · Hotelaria">Wellness · Spa · Hotelaria</option><option value="Outros">Outros</option></select></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"url","name":"portfolio","placeholder":"https://…","hint":"Site, Instagram, Behance ou drive com projetos."} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Portfólio (URL)</span></label><input type="url" name="portfolio" placeholder="https://…"><div class="aac-hint">Site, Instagram, Behance ou drive com projetos.</div></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"atuacao","required":true} -->
+<label class="wp-block-axell-form-label" for="atuacao"><span class="aac-field-label-text">Atuação principal</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"select","id":"atuacao","required":true,"placeholder":"Selecione uma opção","options":[{"label":"Arquitetura residencial de alto padrão","value":"Arquitetura residencial de alto padrão"},{"label":"Design de interiores","value":"Design de interiores"},{"label":"Arquitetura corporativa / hospitalidade","value":"Arquitetura corporativa / hospitalidade"},{"label":"Wellness · Spa · Hotelaria","value":"Wellness · Spa · Hotelaria"},{"label":"Outros","value":"Outros"}]} -->
+<select class="wp-block-axell-form-control" id="atuacao" name="atuacao" required aria-required="true" placeholder="Selecione uma opção"><option value="">Selecione uma opção</option><option value="Arquitetura residencial de alto padrão">Arquitetura residencial de alto padrão</option><option value="Design de interiores">Design de interiores</option><option value="Arquitetura corporativa / hospitalidade">Arquitetura corporativa / hospitalidade</option><option value="Wellness · Spa · Hotelaria">Wellness · Spa · Hotelaria</option><option value="Outros">Outros</option></select>
+<!-- /wp:axell/form-control -->
 </div>
 <!-- /wp:group -->
-<!-- wp:paragraph {"className":"aac-form-legend"} -->
-<p class="wp-block-paragraph aac-form-legend">02 — Documento</p>
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"portfolio"} -->
+<label class="wp-block-axell-form-label" for="portfolio"><span class="aac-field-label-text">Portfólio (URL)</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"url","id":"portfolio","placeholder":"https://…"} -->
+<input class="wp-block-axell-form-control" id="portfolio" name="portfolio" placeholder="https://…" type="url"/>
+<!-- /wp:axell/form-control -->
+<!-- wp:paragraph {"className":"aac-hint"} -->
+<p class="wp-block-paragraph aac-hint">Site, Instagram, Behance ou drive com projetos.</p>
 <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</fieldset>
+<!-- /wp:axell/form-fieldset -->
+<!-- wp:axell/form-fieldset {} -->
+<fieldset class="wp-block-axell-form-fieldset"><legend class="aac-form-legend-text">02 — Documento</legend>
 <!-- wp:group {"className":"aac-form-row aac-cols-2"} -->
 <div class="wp-block-group aac-form-row aac-cols-2">
-<!-- wp:axellcore/form-input {"type":"select","name":"tipoDoc","required":true,"placeholder":"Selecione","options":[{"label":"Pessoa Física · CPF","value":"cpf"},{"label":"Pessoa Jurídica · CNPJ","value":"cnpj"}]} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Tipo de cadastro</span><span class="aac-req"> *</span></label><select name="tipoDoc" required="" placeholder="Selecione"><option value="">Selecione</option><option value="cpf">Pessoa Física · CPF</option><option value="cnpj">Pessoa Jurídica · CNPJ</option></select></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"documento","required":true,"placeholder":"000.000.000-00 / 12.ABC.345/01DE-35","hint":"Utilizado para emissão de bônus e nota fiscal. CNPJ alfanumérico é aceito.","mask":"cpf-cnpj","maskSourceName":"tipoDoc"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">CPF ou CNPJ</span><span class="aac-req"> *</span></label><input type="text" name="documento" required="" placeholder="000.000.000-00 / 12.ABC.345/01DE-35" data-aac-mask="cpf-cnpj" data-aac-mask-source="tipoDoc"><div class="aac-hint">Utilizado para emissão de bônus e nota fiscal. CNPJ alfanumérico é aceito.</div></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"tipoDoc","required":true} -->
+<label class="wp-block-axell-form-label" for="tipoDoc"><span class="aac-field-label-text">Tipo de cadastro</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"select","id":"tipoDoc","required":true,"placeholder":"Selecione","options":[{"label":"Pessoa Física · CPF","value":"cpf"},{"label":"Pessoa Jurídica · CNPJ","value":"cnpj"}]} -->
+<select class="wp-block-axell-form-control" id="tipoDoc" name="tipoDoc" required aria-required="true" placeholder="Selecione"><option value="">Selecione</option><option value="cpf">Pessoa Física · CPF</option><option value="cnpj">Pessoa Jurídica · CNPJ</option></select>
+<!-- /wp:axell/form-control -->
 </div>
 <!-- /wp:group -->
-<!-- wp:paragraph {"className":"aac-form-legend"} -->
-<p class="wp-block-paragraph aac-form-legend">03 — Endereço do escritório</p>
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"documento","required":true} -->
+<label class="wp-block-axell-form-label" for="documento"><span class="aac-field-label-text">CPF ou CNPJ</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"documento","required":true,"placeholder":"000.000.000-00 / 12.ABC.345/01DE-35","mask":"cpf-cnpj","maskSourceName":"tipoDoc"} -->
+<input class="wp-block-axell-form-control" id="documento" name="documento" required aria-required="true" placeholder="000.000.000-00 / 12.ABC.345/01DE-35" data-aac-mask="cpf-cnpj" data-aac-mask-source="tipoDoc" type="text"/>
+<!-- /wp:axell/form-control -->
+<!-- wp:paragraph {"className":"aac-hint"} -->
+<p class="wp-block-paragraph aac-hint">Utilizado para emissão de bônus e nota fiscal. CNPJ alfanumérico é aceito.</p>
 <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</fieldset>
+<!-- /wp:axell/form-fieldset -->
+<!-- wp:axell/form-fieldset {} -->
+<fieldset class="wp-block-axell-form-fieldset"><legend class="aac-form-legend-text">03 — Endereço do escritório</legend>
 <!-- wp:group {"className":"aac-form-row aac-cols-addr"} -->
 <div class="wp-block-group aac-form-row aac-cols-addr">
-<!-- wp:axellcore/form-input {"type":"text","name":"rua","required":true,"placeholder":"Rua, Avenida, Alameda…"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Logradouro</span><span class="aac-req"> *</span></label><input type="text" name="rua" required="" placeholder="Rua, Avenida, Alameda…"></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"numero","required":true,"placeholder":"000"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Número</span><span class="aac-req"> *</span></label><input type="text" name="numero" required="" placeholder="000"></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"complemento","placeholder":"Sala, andar, conjunto"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Complemento</span></label><input type="text" name="complemento" placeholder="Sala, andar, conjunto"></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"rua","required":true} -->
+<label class="wp-block-axell-form-label" for="rua"><span class="aac-field-label-text">Logradouro</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"rua","required":true,"placeholder":"Rua, Avenida, Alameda…"} -->
+<input class="wp-block-axell-form-control" id="rua" name="rua" required aria-required="true" placeholder="Rua, Avenida, Alameda…" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"numero","required":true} -->
+<label class="wp-block-axell-form-label" for="numero"><span class="aac-field-label-text">Número</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"numero","required":true,"placeholder":"000"} -->
+<input class="wp-block-axell-form-control" id="numero" name="numero" required aria-required="true" placeholder="000" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"complemento"} -->
+<label class="wp-block-axell-form-label" for="complemento"><span class="aac-field-label-text">Complemento</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"complemento","placeholder":"Sala, andar, conjunto"} -->
+<input class="wp-block-axell-form-control" id="complemento" name="complemento" placeholder="Sala, andar, conjunto" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"aac-form-row aac-cols-2"} -->
 <div class="wp-block-group aac-form-row aac-cols-2">
-<!-- wp:axellcore/form-input {"type":"text","name":"bairro","required":true,"placeholder":"Bairro"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Bairro</span><span class="aac-req"> *</span></label><input type="text" name="bairro" required="" placeholder="Bairro"></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"referencia","placeholder":"Próximo a…"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Referência</span></label><input type="text" name="referencia" placeholder="Próximo a…"></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"bairro","required":true} -->
+<label class="wp-block-axell-form-label" for="bairro"><span class="aac-field-label-text">Bairro</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"bairro","required":true,"placeholder":"Bairro"} -->
+<input class="wp-block-axell-form-control" id="bairro" name="bairro" required aria-required="true" placeholder="Bairro" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"referencia"} -->
+<label class="wp-block-axell-form-label" for="referencia"><span class="aac-field-label-text">Referência</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"referencia","placeholder":"Próximo a…"} -->
+<input class="wp-block-axell-form-control" id="referencia" name="referencia" placeholder="Próximo a…" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"aac-form-row aac-cols-city"} -->
 <div class="wp-block-group aac-form-row aac-cols-city">
-<!-- wp:axellcore/form-input {"type":"select","name":"uf","required":true,"placeholder":"—","options":[{"label":"AC","value":"AC"},{"label":"AL","value":"AL"},{"label":"AP","value":"AP"},{"label":"AM","value":"AM"},{"label":"BA","value":"BA"},{"label":"CE","value":"CE"},{"label":"DF","value":"DF"},{"label":"ES","value":"ES"},{"label":"GO","value":"GO"},{"label":"MA","value":"MA"},{"label":"MT","value":"MT"},{"label":"MS","value":"MS"},{"label":"MG","value":"MG"},{"label":"PA","value":"PA"},{"label":"PB","value":"PB"},{"label":"PR","value":"PR"},{"label":"PE","value":"PE"},{"label":"PI","value":"PI"},{"label":"RJ","value":"RJ"},{"label":"RN","value":"RN"},{"label":"RS","value":"RS"},{"label":"RO","value":"RO"},{"label":"RR","value":"RR"},{"label":"SC","value":"SC"},{"label":"SP","value":"SP"},{"label":"SE","value":"SE"},{"label":"TO","value":"TO"}]} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">UF</span><span class="aac-req"> *</span></label><select name="uf" required="" placeholder="—"><option value="">—</option><option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option></select></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"select","name":"cidade","required":true,"placeholder":"Selecione o estado","citiesSourceName":"uf"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">Cidade</span><span class="aac-req"> *</span></label><select name="cidade" required="" placeholder="Selecione o estado" data-aac-cities-source="uf" disabled=""><option value="">Selecione o estado</option></select></div>
-<!-- /wp:axellcore/form-input -->
-<!-- wp:axellcore/form-input {"type":"text","name":"cep","required":true,"placeholder":"00000-000","mask":"cep"} -->
-<div class="aac-field wp-block-axellcore-form-input"><label><span class="aac-field-label-text">CEP</span><span class="aac-req"> *</span></label><input type="text" name="cep" required="" placeholder="00000-000" data-aac-mask="cep"></div>
-<!-- /wp:axellcore/form-input -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"uf","required":true} -->
+<label class="wp-block-axell-form-label" for="uf"><span class="aac-field-label-text">UF</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"select","id":"uf","required":true,"placeholder":"—","options":[{"label":"AC","value":"AC"},{"label":"AL","value":"AL"},{"label":"AP","value":"AP"},{"label":"AM","value":"AM"},{"label":"BA","value":"BA"},{"label":"CE","value":"CE"},{"label":"DF","value":"DF"},{"label":"ES","value":"ES"},{"label":"GO","value":"GO"},{"label":"MA","value":"MA"},{"label":"MT","value":"MT"},{"label":"MS","value":"MS"},{"label":"MG","value":"MG"},{"label":"PA","value":"PA"},{"label":"PB","value":"PB"},{"label":"PR","value":"PR"},{"label":"PE","value":"PE"},{"label":"PI","value":"PI"},{"label":"RJ","value":"RJ"},{"label":"RN","value":"RN"},{"label":"RS","value":"RS"},{"label":"RO","value":"RO"},{"label":"RR","value":"RR"},{"label":"SC","value":"SC"},{"label":"SP","value":"SP"},{"label":"SE","value":"SE"},{"label":"TO","value":"TO"}]} -->
+<select class="wp-block-axell-form-control" id="uf" name="uf" required aria-required="true" placeholder="—"><option value="">—</option><option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option></select>
+<!-- /wp:axell/form-control -->
 </div>
 <!-- /wp:group -->
-<!-- wp:paragraph {"className":"aac-form-legend"} -->
-<p class="wp-block-paragraph aac-form-legend">04 — Lojas parceiras</p>
-<!-- /wp:paragraph -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"cidade","required":true} -->
+<label class="wp-block-axell-form-label" for="cidade"><span class="aac-field-label-text">Cidade</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"select","id":"cidade","required":true,"placeholder":"Selecione o estado","citiesSourceName":"uf"} -->
+<select class="wp-block-axell-form-control" id="cidade" name="cidade" required aria-required="true" placeholder="Selecione o estado" data-aac-cities-source="uf" disabled><option value="">Selecione o estado</option></select>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+<!-- wp:group {"className":"aac-field"} -->
+<div class="wp-block-group aac-field">
+<!-- wp:axell/form-label {"for":"cep","required":true} -->
+<label class="wp-block-axell-form-label" for="cep"><span class="aac-field-label-text">CEP</span><span class="aac-req"> *</span></label>
+<!-- /wp:axell/form-label -->
+<!-- wp:axell/form-control {"type":"text","id":"cep","required":true,"placeholder":"00000-000","mask":"cep"} -->
+<input class="wp-block-axell-form-control" id="cep" name="cep" required aria-required="true" placeholder="00000-000" data-aac-mask="cep" type="text"/>
+<!-- /wp:axell/form-control -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+</fieldset>
+<!-- /wp:axell/form-fieldset -->
+<!-- wp:axell/form-fieldset {} -->
+<fieldset class="wp-block-axell-form-fieldset"><legend class="aac-form-legend-text">04 — Lojas parceiras</legend>
 <!-- wp:group {"className":"aac-field"} -->
 <div class="wp-block-group aac-field">
 <!-- wp:paragraph {"className":"aac-field-label-text"} -->
@@ -1058,9 +1185,35 @@
 <!-- /wp:html -->
 </div>
 <!-- /wp:group -->
-<!-- wp:axellcore/form-input {"type":"checkbox","name":"regulamento","required":true,"variant":"consent"} -->
-<label class="aac-consent wp-block-axellcore-form-input"><input type="checkbox" name="regulamento" required=""><span class="aac-field-label-text">Li e concordo com o <a href="#">regulamento do Atelier Axell Club</a> e com o tratamento dos meus dados conforme a Política de Privacidade e a LGPD.</span></label>
-<!-- /wp:axellcore/form-input -->
+</fieldset>
+<!-- /wp:axell/form-fieldset -->
+<!-- wp:group {"className":"aac-consent"} -->
+<div class="wp-block-group aac-consent">
+<!-- wp:axell/form-control {"type":"checkbox","id":"regulamento","required":true} -->
+<input class="wp-block-axell-form-control" id="regulamento" name="regulamento" required aria-required="true" type="checkbox"/>
+<!-- /wp:axell/form-control -->
+<!-- wp:axell/form-label {"for":"regulamento"} -->
+<label class="wp-block-axell-form-label" for="regulamento"><span class="aac-field-label-text">Li e concordo com o <a href="#">regulamento do Atelier Axell Club</a> e com o tratamento dos meus dados conforme a Política de Privacidade e a LGPD.</span></label>
+<!-- /wp:axell/form-label -->
+</div>
+<!-- /wp:group -->
+<!-- wp:axell/form-submission-notification {"type":"success"} -->
+<div class="wp-block-axell-form-submission-notification aac-notice aac-notice-success" data-aac-notice-type="success">
+<!-- wp:paragraph {} -->
+<p class="wp-block-paragraph">Sua solicitação foi enviada.</p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {} -->
+<p class="wp-block-paragraph">A curadoria Axell entrará em contato em breve com o próximo passo. Bem-vindo(a) ao Atelier.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:axell/form-submission-notification -->
+<!-- wp:axell/form-submission-notification {"type":"error"} -->
+<div class="wp-block-axell-form-submission-notification aac-notice aac-notice-error" data-aac-notice-type="error">
+<!-- wp:paragraph {} -->
+<p class="wp-block-paragraph">Não foi possível enviar sua solicitação. Tente novamente em instantes.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:axell/form-submission-notification -->
 <!-- wp:group {"className":"aac-submit-row"} -->
 <div class="wp-block-group aac-submit-row">
 <!-- wp:buttons {} -->
@@ -1076,7 +1229,7 @@
 </div>
 <!-- /wp:group -->
 </form>
-<!-- /wp:axellcore/form -->
+<!-- /wp:axell/form -->
 </div>
 <!-- /wp:column -->
 </div>

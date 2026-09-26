@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axellcore/form-input",
+	"title": "Atelier Form Field",
+	"category": "text",
+	"ancestor": [ "axell/form-fieldset" ],
+	"description": "Deprecated — superseded by axell/form-label + axell/form-control (see this plugin's CLAUDE.md). Kept registered, hidden from the inserter, so any pre-existing content using it keeps rendering/editing correctly.",
+	"keywords": [ "input", "field", "form" ],
+	"textdomain": "axellcore-atelierclub",
+	"attributes": {
+		"type": { "type": "string", "default": "text" },
+		"variant": { "type": "string", "default": "field" },
+		"name": { "type": "string", "default": "" },
+		"label": {
+			"type": "rich-text",
+			"source": "rich-text",
+			"selector": ".aac-field-label-text",
+			"default": "Label"
+		},
+		"required": { "type": "boolean", "default": false },
+		"placeholder": { "type": "string", "default": "" },
+		"hint": { "type": "string", "default": "" },
+		"value": { "type": "string", "default": "" },
+		"checked": { "type": "boolean", "default": false },
+		"options": { "type": "array", "default": [] },
+		"mask": { "type": "string", "default": "" },
+		"maskSourceName": { "type": "string", "default": "" },
+		"citiesSourceName": { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"className": true,
+		"customClassName": true,
+		"spacing": { "margin": [ "top", "bottom" ] },
+		"inserter": false
+	},
+	"editorScript": [ "file:./index.js", "file:./variations.js" ],
+	"style": "file:./style.scss"
+}
